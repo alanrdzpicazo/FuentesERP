@@ -1,0 +1,12 @@
+﻿namespace ProbeMedic.INVENTARIOS.REPORTES
+{
+
+
+    partial class DSInventario
+    {
+        partial class Stock_Labs_LGDataTable
+        {
+
+        }
+    }
+}

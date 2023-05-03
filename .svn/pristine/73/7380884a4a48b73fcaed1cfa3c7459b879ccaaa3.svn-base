@@ -1,0 +1,699 @@
+﻿namespace ProbeMedic.VENTAS
+{
+    partial class Frm_Cancelacion_Venta
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.BtnLimpiar = new System.Windows.Forms.Button();
+            this.BtnCancelar = new System.Windows.Forms.Button();
+            this.Dgv_Datos = new System.Windows.Forms.DataGridView();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.Txt_Observaciones = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.Txt_Cliente = new System.Windows.Forms.TextBox();
+            this.Lbl_Total = new System.Windows.Forms.Label();
+            this.Txt_Almacen = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.Txt_Usuario = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.sd = new System.Windows.Forms.Label();
+            this.Lbl_Fecha = new System.Windows.Forms.Label();
+            this.Txt_Folio = new System.Windows.Forms.TextBox();
+            this.fdfdf = new System.Windows.Forms.Label();
+            this.fdfdfdd = new System.Windows.Forms.Label();
+            this.Lbl_Folio = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.K_Transaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.K_Almacen = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D_Almacen = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.K_Usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D_Usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.F_Transaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cancelado = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Cantidad_Cancelacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cantidad_Articulos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.K_Medico = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D_Medico = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.K_Cliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D_Cliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.B_RequiereReceta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Observaciones1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Observaciones2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Observaciones3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Observaciones4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.K_Articulo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SKU = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D_Articulo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D_Unidad_Medida = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Lote = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.F_Caducidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Monto_Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Precio_Unitario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.K_Precierre_Empleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Monto_Transaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Dgv_Datos)).BeginInit();
+            this.panel2.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.panel3);
+            this.panel1.Controls.Add(this.panel2);
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(815, 547);
+            this.panel1.TabIndex = 0;
+            this.panel1.TabStop = true;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.panel4);
+            this.panel3.Controls.Add(this.Dgv_Datos);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(0, 245);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(815, 302);
+            this.panel3.TabIndex = 2;
+            this.panel3.TabStop = true;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.BtnLimpiar);
+            this.panel4.Controls.Add(this.BtnCancelar);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel4.Location = new System.Drawing.Point(0, 227);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(815, 75);
+            this.panel4.TabIndex = 3;
+            this.panel4.TabStop = true;
+            // 
+            // BtnLimpiar
+            // 
+            this.BtnLimpiar.BackColor = System.Drawing.Color.White;
+            this.BtnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(23)))), ((int)(((byte)(81)))));
+            this.BtnLimpiar.FlatAppearance.BorderSize = 2;
+            this.BtnLimpiar.FlatAppearance.CheckedBackColor = System.Drawing.Color.White;
+            this.BtnLimpiar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(23)))), ((int)(((byte)(80)))));
+            this.BtnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnLimpiar.Font = new System.Drawing.Font("Arial Rounded MT Bold", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnLimpiar.Location = new System.Drawing.Point(574, 11);
+            this.BtnLimpiar.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.BtnLimpiar.Name = "BtnLimpiar";
+            this.BtnLimpiar.Size = new System.Drawing.Size(107, 52);
+            this.BtnLimpiar.TabIndex = 5;
+            this.BtnLimpiar.Text = "Limpiar \r\nF3";
+            this.BtnLimpiar.UseVisualStyleBackColor = true;
+            this.BtnLimpiar.Click += new System.EventHandler(this.BtnLimpiar_Click);
+            // 
+            // BtnCancelar
+            // 
+            this.BtnCancelar.BackColor = System.Drawing.Color.White;
+            this.BtnCancelar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(23)))), ((int)(((byte)(81)))));
+            this.BtnCancelar.FlatAppearance.BorderSize = 2;
+            this.BtnCancelar.FlatAppearance.CheckedBackColor = System.Drawing.Color.White;
+            this.BtnCancelar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(23)))), ((int)(((byte)(80)))));
+            this.BtnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnCancelar.Font = new System.Drawing.Font("Arial Rounded MT Bold", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnCancelar.Location = new System.Drawing.Point(691, 11);
+            this.BtnCancelar.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.BtnCancelar.Name = "BtnCancelar";
+            this.BtnCancelar.Size = new System.Drawing.Size(107, 52);
+            this.BtnCancelar.TabIndex = 4;
+            this.BtnCancelar.Text = "Cancelar\r\nF4\r\n";
+            this.BtnCancelar.UseVisualStyleBackColor = true;
+            this.BtnCancelar.Click += new System.EventHandler(this.BtnCancelar_Click);
+            // 
+            // Dgv_Datos
+            // 
+            this.Dgv_Datos.AllowUserToAddRows = false;
+            this.Dgv_Datos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.Dgv_Datos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.K_Transaccion,
+            this.K_Almacen,
+            this.D_Almacen,
+            this.K_Usuario,
+            this.D_Usuario,
+            this.F_Transaccion,
+            this.Cancelado,
+            this.Cantidad_Cancelacion,
+            this.Cantidad_Articulos,
+            this.K_Medico,
+            this.D_Medico,
+            this.K_Cliente,
+            this.D_Cliente,
+            this.B_RequiereReceta,
+            this.Observaciones1,
+            this.Observaciones2,
+            this.Observaciones3,
+            this.Observaciones4,
+            this.K_Articulo,
+            this.SKU,
+            this.D_Articulo,
+            this.D_Unidad_Medida,
+            this.Lote,
+            this.F_Caducidad,
+            this.Monto_Total,
+            this.Precio_Unitario,
+            this.K_Precierre_Empleado,
+            this.Monto_Transaccion});
+            this.Dgv_Datos.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Dgv_Datos.Location = new System.Drawing.Point(0, 0);
+            this.Dgv_Datos.MultiSelect = false;
+            this.Dgv_Datos.Name = "Dgv_Datos";
+            this.Dgv_Datos.Size = new System.Drawing.Size(815, 302);
+            this.Dgv_Datos.TabIndex = 0;
+            this.Dgv_Datos.TabStop = false;
+            this.Dgv_Datos.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Datos_CellValidated);
+            this.Dgv_Datos.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.Dgv_Datos_CellValidating);
+            this.Dgv_Datos.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.Dgv_Datos_EditingControlShowing);
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.panel2.Controls.Add(this.Txt_Observaciones);
+            this.panel2.Controls.Add(this.label4);
+            this.panel2.Controls.Add(this.Txt_Cliente);
+            this.panel2.Controls.Add(this.Lbl_Total);
+            this.panel2.Controls.Add(this.Txt_Almacen);
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.Txt_Usuario);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.label3);
+            this.panel2.Controls.Add(this.sd);
+            this.panel2.Controls.Add(this.Lbl_Fecha);
+            this.panel2.Controls.Add(this.Txt_Folio);
+            this.panel2.Controls.Add(this.fdfdf);
+            this.panel2.Controls.Add(this.fdfdfdd);
+            this.panel2.Controls.Add(this.Lbl_Folio);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 28);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(815, 217);
+            this.panel2.TabIndex = 1;
+            this.panel2.TabStop = true;
+            // 
+            // Txt_Observaciones
+            // 
+            this.Txt_Observaciones.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.Txt_Observaciones.Location = new System.Drawing.Point(142, 151);
+            this.Txt_Observaciones.Multiline = true;
+            this.Txt_Observaciones.Name = "Txt_Observaciones";
+            this.Txt_Observaciones.Size = new System.Drawing.Size(327, 58);
+            this.Txt_Observaciones.TabIndex = 3;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(24, 156);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(108, 16);
+            this.label4.TabIndex = 23;
+            this.label4.Text = "Observaciones:";
+            // 
+            // Txt_Cliente
+            // 
+            this.Txt_Cliente.Location = new System.Drawing.Point(142, 115);
+            this.Txt_Cliente.Name = "Txt_Cliente";
+            this.Txt_Cliente.ReadOnly = true;
+            this.Txt_Cliente.Size = new System.Drawing.Size(327, 24);
+            this.Txt_Cliente.TabIndex = 22;
+            this.Txt_Cliente.TabStop = false;
+            // 
+            // Lbl_Total
+            // 
+            this.Lbl_Total.AutoSize = true;
+            this.Lbl_Total.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_Total.Location = new System.Drawing.Point(583, 157);
+            this.Lbl_Total.Name = "Lbl_Total";
+            this.Lbl_Total.Size = new System.Drawing.Size(133, 29);
+            this.Lbl_Total.TabIndex = 10;
+            this.Lbl_Total.Text = "________";
+            // 
+            // Txt_Almacen
+            // 
+            this.Txt_Almacen.Location = new System.Drawing.Point(142, 80);
+            this.Txt_Almacen.Name = "Txt_Almacen";
+            this.Txt_Almacen.ReadOnly = true;
+            this.Txt_Almacen.Size = new System.Drawing.Size(327, 24);
+            this.Txt_Almacen.TabIndex = 21;
+            this.Txt_Almacen.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(564, 156);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(28, 29);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "$";
+            // 
+            // Txt_Usuario
+            // 
+            this.Txt_Usuario.Location = new System.Drawing.Point(142, 45);
+            this.Txt_Usuario.Name = "Txt_Usuario";
+            this.Txt_Usuario.ReadOnly = true;
+            this.Txt_Usuario.Size = new System.Drawing.Size(327, 24);
+            this.Txt_Usuario.TabIndex = 20;
+            this.Txt_Usuario.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(483, 157);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(83, 29);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Total:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(489, 18);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(50, 16);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "Fecha:";
+            // 
+            // sd
+            // 
+            this.sd.AutoSize = true;
+            this.sd.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sd.Location = new System.Drawing.Point(23, 120);
+            this.sd.Name = "sd";
+            this.sd.Size = new System.Drawing.Size(57, 16);
+            this.sd.TabIndex = 7;
+            this.sd.Text = "Cliente:";
+            // 
+            // Lbl_Fecha
+            // 
+            this.Lbl_Fecha.AutoSize = true;
+            this.Lbl_Fecha.Location = new System.Drawing.Point(542, 17);
+            this.Lbl_Fecha.Name = "Lbl_Fecha";
+            this.Lbl_Fecha.Size = new System.Drawing.Size(176, 17);
+            this.Lbl_Fecha.TabIndex = 6;
+            this.Lbl_Fecha.Text = "_____________________";
+            // 
+            // Txt_Folio
+            // 
+            this.Txt_Folio.Location = new System.Drawing.Point(142, 14);
+            this.Txt_Folio.Name = "Txt_Folio";
+            this.Txt_Folio.Size = new System.Drawing.Size(116, 24);
+            this.Txt_Folio.TabIndex = 2;
+            this.Txt_Folio.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Txt_Folio_KeyDown);
+            this.Txt_Folio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Txt_Folio_KeyPress);
+            this.Txt_Folio.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Txt_Folio_PreviewKeyDown);
+            // 
+            // fdfdf
+            // 
+            this.fdfdf.AutoSize = true;
+            this.fdfdf.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fdfdf.Location = new System.Drawing.Point(23, 53);
+            this.fdfdf.Name = "fdfdf";
+            this.fdfdf.Size = new System.Drawing.Size(61, 16);
+            this.fdfdf.TabIndex = 3;
+            this.fdfdf.Text = "Usuario:";
+            // 
+            // fdfdfdd
+            // 
+            this.fdfdfdd.AutoSize = true;
+            this.fdfdfdd.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fdfdfdd.Location = new System.Drawing.Point(23, 86);
+            this.fdfdfdd.Name = "fdfdfdd";
+            this.fdfdfdd.Size = new System.Drawing.Size(68, 16);
+            this.fdfdfdd.TabIndex = 2;
+            this.fdfdfdd.Text = "Almacen:";
+            // 
+            // Lbl_Folio
+            // 
+            this.Lbl_Folio.AutoSize = true;
+            this.Lbl_Folio.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_Folio.Location = new System.Drawing.Point(23, 18);
+            this.Lbl_Folio.Name = "Lbl_Folio";
+            this.Lbl_Folio.Size = new System.Drawing.Size(41, 16);
+            this.Lbl_Folio.TabIndex = 0;
+            this.Lbl_Folio.Text = "Folio:";
+            // 
+            // label5
+            // 
+            this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(70)))), ((int)(((byte)(209)))));
+            this.label5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label5.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.SystemColors.Control;
+            this.label5.Location = new System.Drawing.Point(0, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(815, 28);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Transacciones";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // K_Transaccion
+            // 
+            this.K_Transaccion.DataPropertyName = "K_Transaccion";
+            this.K_Transaccion.HeaderText = "K_Transaccion";
+            this.K_Transaccion.Name = "K_Transaccion";
+            this.K_Transaccion.ReadOnly = true;
+            this.K_Transaccion.Visible = false;
+            this.K_Transaccion.Width = 85;
+            // 
+            // K_Almacen
+            // 
+            this.K_Almacen.DataPropertyName = "K_Almacen";
+            this.K_Almacen.HeaderText = "K_Almacen";
+            this.K_Almacen.Name = "K_Almacen";
+            this.K_Almacen.ReadOnly = true;
+            this.K_Almacen.Visible = false;
+            // 
+            // D_Almacen
+            // 
+            this.D_Almacen.DataPropertyName = "D_Almacen";
+            this.D_Almacen.HeaderText = "D_Almacen";
+            this.D_Almacen.Name = "D_Almacen";
+            this.D_Almacen.ReadOnly = true;
+            this.D_Almacen.Visible = false;
+            // 
+            // K_Usuario
+            // 
+            this.K_Usuario.DataPropertyName = "K_Usuario";
+            this.K_Usuario.HeaderText = "K_Usuario";
+            this.K_Usuario.Name = "K_Usuario";
+            this.K_Usuario.ReadOnly = true;
+            this.K_Usuario.Visible = false;
+            // 
+            // D_Usuario
+            // 
+            this.D_Usuario.DataPropertyName = "D_Usuario";
+            this.D_Usuario.HeaderText = "D_Usuario";
+            this.D_Usuario.Name = "D_Usuario";
+            this.D_Usuario.ReadOnly = true;
+            this.D_Usuario.Visible = false;
+            // 
+            // F_Transaccion
+            // 
+            this.F_Transaccion.DataPropertyName = "F_Transaccion";
+            this.F_Transaccion.HeaderText = "F_Transaccion";
+            this.F_Transaccion.Name = "F_Transaccion";
+            this.F_Transaccion.ReadOnly = true;
+            this.F_Transaccion.Visible = false;
+            // 
+            // Cancelado
+            // 
+            this.Cancelado.DataPropertyName = "Cancelado";
+            this.Cancelado.HeaderText = "Cancelado";
+            this.Cancelado.Name = "Cancelado";
+            this.Cancelado.Visible = false;
+            this.Cancelado.Width = 80;
+            // 
+            // Cantidad_Cancelacion
+            // 
+            this.Cantidad_Cancelacion.DataPropertyName = "Cantidad_Cancelacion";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(80)))), ((int)(((byte)(139)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.Format = "N0";
+            dataGridViewCellStyle1.NullValue = null;
+            this.Cantidad_Cancelacion.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Cantidad_Cancelacion.HeaderText = "Cant. a Cancelar";
+            this.Cantidad_Cancelacion.MaxInputLength = 5;
+            this.Cantidad_Cancelacion.Name = "Cantidad_Cancelacion";
+            this.Cantidad_Cancelacion.Width = 65;
+            // 
+            // Cantidad_Articulos
+            // 
+            this.Cantidad_Articulos.DataPropertyName = "Cantidad_Articulos";
+            this.Cantidad_Articulos.HeaderText = "Cant.";
+            this.Cantidad_Articulos.Name = "Cantidad_Articulos";
+            this.Cantidad_Articulos.ReadOnly = true;
+            this.Cantidad_Articulos.Width = 50;
+            // 
+            // K_Medico
+            // 
+            this.K_Medico.DataPropertyName = "K_Medico";
+            this.K_Medico.HeaderText = "K_Medico";
+            this.K_Medico.Name = "K_Medico";
+            this.K_Medico.ReadOnly = true;
+            this.K_Medico.Visible = false;
+            // 
+            // D_Medico
+            // 
+            this.D_Medico.DataPropertyName = "D_Medico";
+            this.D_Medico.HeaderText = "D_Medico";
+            this.D_Medico.Name = "D_Medico";
+            this.D_Medico.ReadOnly = true;
+            this.D_Medico.Visible = false;
+            // 
+            // K_Cliente
+            // 
+            this.K_Cliente.DataPropertyName = "K_Cliente";
+            this.K_Cliente.HeaderText = "K_Cliente";
+            this.K_Cliente.Name = "K_Cliente";
+            this.K_Cliente.ReadOnly = true;
+            this.K_Cliente.Visible = false;
+            // 
+            // D_Cliente
+            // 
+            this.D_Cliente.DataPropertyName = "D_Cliente";
+            this.D_Cliente.HeaderText = " D_Cliente";
+            this.D_Cliente.Name = "D_Cliente";
+            this.D_Cliente.ReadOnly = true;
+            this.D_Cliente.Visible = false;
+            // 
+            // B_RequiereReceta
+            // 
+            this.B_RequiereReceta.DataPropertyName = "B_RequiereReceta";
+            this.B_RequiereReceta.HeaderText = "B_RequiereReceta";
+            this.B_RequiereReceta.Name = "B_RequiereReceta";
+            this.B_RequiereReceta.ReadOnly = true;
+            this.B_RequiereReceta.Visible = false;
+            // 
+            // Observaciones1
+            // 
+            this.Observaciones1.DataPropertyName = "Observaciones1";
+            this.Observaciones1.HeaderText = "Observaciones1";
+            this.Observaciones1.Name = "Observaciones1";
+            this.Observaciones1.ReadOnly = true;
+            this.Observaciones1.Visible = false;
+            // 
+            // Observaciones2
+            // 
+            this.Observaciones2.DataPropertyName = "Observaciones2";
+            this.Observaciones2.HeaderText = "Observaciones2";
+            this.Observaciones2.Name = "Observaciones2";
+            this.Observaciones2.ReadOnly = true;
+            this.Observaciones2.Visible = false;
+            // 
+            // Observaciones3
+            // 
+            this.Observaciones3.DataPropertyName = "Observaciones3";
+            this.Observaciones3.HeaderText = "Observaciones3";
+            this.Observaciones3.Name = "Observaciones3";
+            this.Observaciones3.ReadOnly = true;
+            this.Observaciones3.Visible = false;
+            // 
+            // Observaciones4
+            // 
+            this.Observaciones4.DataPropertyName = "Observaciones4";
+            this.Observaciones4.HeaderText = "Observaciones4";
+            this.Observaciones4.Name = "Observaciones4";
+            this.Observaciones4.ReadOnly = true;
+            this.Observaciones4.Visible = false;
+            // 
+            // K_Articulo
+            // 
+            this.K_Articulo.DataPropertyName = "K_Articulo";
+            this.K_Articulo.HeaderText = "K_Articulo";
+            this.K_Articulo.Name = "K_Articulo";
+            this.K_Articulo.ReadOnly = true;
+            this.K_Articulo.Visible = false;
+            // 
+            // SKU
+            // 
+            this.SKU.DataPropertyName = "SKU";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.SKU.DefaultCellStyle = dataGridViewCellStyle2;
+            this.SKU.HeaderText = "SKU";
+            this.SKU.Name = "SKU";
+            this.SKU.ReadOnly = true;
+            this.SKU.Width = 135;
+            // 
+            // D_Articulo
+            // 
+            this.D_Articulo.DataPropertyName = "D_Articulo";
+            this.D_Articulo.HeaderText = "Artículo";
+            this.D_Articulo.Name = "D_Articulo";
+            this.D_Articulo.ReadOnly = true;
+            this.D_Articulo.Width = 300;
+            // 
+            // D_Unidad_Medida
+            // 
+            this.D_Unidad_Medida.DataPropertyName = "D_Unidad_Medida";
+            this.D_Unidad_Medida.HeaderText = "U. Medida";
+            this.D_Unidad_Medida.Name = "D_Unidad_Medida";
+            this.D_Unidad_Medida.ReadOnly = true;
+            this.D_Unidad_Medida.Visible = false;
+            // 
+            // Lote
+            // 
+            this.Lote.DataPropertyName = "Lote";
+            this.Lote.HeaderText = "Lote";
+            this.Lote.Name = "Lote";
+            this.Lote.ReadOnly = true;
+            // 
+            // F_Caducidad
+            // 
+            this.F_Caducidad.DataPropertyName = "F_Caducidad";
+            this.F_Caducidad.HeaderText = "F_Caducidad";
+            this.F_Caducidad.Name = "F_Caducidad";
+            this.F_Caducidad.ReadOnly = true;
+            this.F_Caducidad.Visible = false;
+            // 
+            // Monto_Total
+            // 
+            this.Monto_Total.DataPropertyName = "Monto_Total";
+            this.Monto_Total.HeaderText = "Monto_Total";
+            this.Monto_Total.Name = "Monto_Total";
+            this.Monto_Total.ReadOnly = true;
+            this.Monto_Total.Visible = false;
+            // 
+            // Precio_Unitario
+            // 
+            this.Precio_Unitario.DataPropertyName = "Precio_Unitario";
+            dataGridViewCellStyle3.Format = "C4";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Precio_Unitario.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Precio_Unitario.HeaderText = "Importe";
+            this.Precio_Unitario.Name = "Precio_Unitario";
+            this.Precio_Unitario.ReadOnly = true;
+            this.Precio_Unitario.Width = 120;
+            // 
+            // K_Precierre_Empleado
+            // 
+            this.K_Precierre_Empleado.DataPropertyName = "K_Precierre_Empleado";
+            this.K_Precierre_Empleado.HeaderText = "K_Precierre_Empleado";
+            this.K_Precierre_Empleado.Name = "K_Precierre_Empleado";
+            this.K_Precierre_Empleado.ReadOnly = true;
+            this.K_Precierre_Empleado.Visible = false;
+            // 
+            // Monto_Transaccion
+            // 
+            this.Monto_Transaccion.DataPropertyName = "Monto_Transaccion";
+            this.Monto_Transaccion.HeaderText = "Monto_Transaccion";
+            this.Monto_Transaccion.Name = "Monto_Transaccion";
+            this.Monto_Transaccion.ReadOnly = true;
+            this.Monto_Transaccion.Visible = false;
+            // 
+            // Frm_Cancelacion_Venta
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(815, 547);
+            this.Controls.Add(this.panel1);
+            this.Name = "Frm_Cancelacion_Venta";
+            this.Text = "Cancelación de Transacciónes";
+            this.Load += new System.EventHandler(this.Frm_Cancelacion_Venta_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Frm_Cancelacion_Venta_KeyDown);
+            this.panel1.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Dgv_Datos)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.DataGridView Dgv_Datos;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label Lbl_Fecha;
+        private System.Windows.Forms.TextBox Txt_Folio;
+        private System.Windows.Forms.Label fdfdf;
+        private System.Windows.Forms.Label fdfdfdd;
+        private System.Windows.Forms.Label Lbl_Folio;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button BtnCancelar;
+        private System.Windows.Forms.Label Lbl_Total;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label sd;
+        private System.Windows.Forms.TextBox Txt_Cliente;
+        private System.Windows.Forms.TextBox Txt_Almacen;
+        private System.Windows.Forms.TextBox Txt_Usuario;
+        private System.Windows.Forms.Button BtnLimpiar;
+        private System.Windows.Forms.TextBox Txt_Observaciones;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn K_Transaccion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn K_Almacen;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D_Almacen;
+        private System.Windows.Forms.DataGridViewTextBoxColumn K_Usuario;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D_Usuario;
+        private System.Windows.Forms.DataGridViewTextBoxColumn F_Transaccion;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Cancelado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad_Cancelacion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad_Articulos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn K_Medico;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D_Medico;
+        private System.Windows.Forms.DataGridViewTextBoxColumn K_Cliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D_Cliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn B_RequiereReceta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Observaciones1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Observaciones2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Observaciones3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Observaciones4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn K_Articulo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SKU;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D_Articulo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D_Unidad_Medida;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Lote;
+        private System.Windows.Forms.DataGridViewTextBoxColumn F_Caducidad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Monto_Total;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Precio_Unitario;
+        private System.Windows.Forms.DataGridViewTextBoxColumn K_Precierre_Empleado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Monto_Transaccion;
+    }
+}

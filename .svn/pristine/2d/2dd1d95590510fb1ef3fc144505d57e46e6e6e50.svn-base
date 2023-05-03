@@ -1,0 +1,11 @@
+﻿namespace ProbeMedic.VENTAS
+{
+
+
+    public partial class dtsDatos
+    {
+        partial class dtPagoDataTable
+        {
+        }
+    }
+}

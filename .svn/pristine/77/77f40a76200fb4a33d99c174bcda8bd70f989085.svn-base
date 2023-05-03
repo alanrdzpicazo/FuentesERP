@@ -1,0 +1,315 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using ProbeMedic.AppCode.BLL;
+namespace ProbeMedic.CATALOGOS
+{
+    public partial class FRM_ZONIFICACION_LOCAL_PRECIOS_AMBULANCIAS : FormaBase
+    {
+        SQLCatalogos catalogosSQL = new SQLCatalogos();
+        Funciones fx = new Funciones();
+
+        DataTable datos = new DataTable();
+        int K_Precio_Local_Ambulancias=0, K_Pais = 0, K_Estado = 0, K_Ciudad = 0, K_Oficina = 0, K_Precio_Ambulancia = 0;
+
+        DateTime FechaInicial = DateTime.Today;
+        DateTime FechaFinal = DateTime.Today;
+        string D_Ciudad = string.Empty;
+
+        int res = 0;
+        string msg = string.Empty;
+
+        public FRM_ZONIFICACION_LOCAL_PRECIOS_AMBULANCIAS()
+        {
+            InitializeComponent();
+        }
+        private void FRM_ZONIFICACION_LOCAL_PRECIOS_AMBULANCIAS_Load(object sender, EventArgs e)
+        {
+
+        }
+        private void btnBuscarCaracteristicas_Click(object sender, EventArgs e)
+        {
+            BuscaCaracteristicas();
+        }
+        private void BuscaCaracteristicas()
+        {
+            //GlobalVar.dtPreciosAmbulancia = catalogosSQL.Gp_Precios_Ambulancia();
+            //Busquedas.Frm_Busca_Caracteristicas frm = new Busquedas.Frm_Busca_Caracteristicas();
+            //frm.BusquedaPropiedadCamposBusqueda = DevuelveCamposBusqueda(GlobalVar.dtPreciosAmbulancia);
+            //frm.BusquedaPropiedadTablaFiltra = GlobalVar.dtPreciosAmbulancia;
+            //frm.BusquedaPropiedadTitulo = "Busca Caracteristicas";
+            //frm.ShowDialog();
+            //if (frm.BusquedaPropiedadReglonRes != null)
+            //{
+            //    K_Precio_Ambulancia = Convert.ToInt16(frm.BusquedaPropiedadReglonRes["K_Precio_Ambulancia"]);
+            //    txt_Caracteristicas.Text = frm.BusquedaPropiedadReglonRes["Caracteristicas"].ToString();
+            //}
+
+        }
+        public void LLenarGrid(int K_Pais, Int32 K_Estado, Int32 K_Ciudad, Int32 K_Precio_Ambulancia, int K_Oficina,DateTime FechaInicial,DateTime FechaFinal)
+        {
+            //res = 0;
+            msg = string.Empty;
+
+            try
+            {
+                datos = catalogosSQL.SK_Zonificacion_Local_Precios_Ambulancias(Convert.ToInt16(K_Pais), K_Estado, K_Ciudad, K_Precio_Ambulancia, K_Oficina,FechaInicial,FechaFinal);
+                grdDatos.DataSource = datos;
+                grdDatos.Columns["D_Pais"].Visible = false;
+                grdDatos.Columns["K_Pais"].Visible = false;
+                grdDatos.Columns["K_Estado"].Visible = false;
+                grdDatos.Columns["K_Ciudad"].Visible = false;
+                grdDatos.Columns["K_Oficina"].Visible = false;
+                grdDatos.Columns["K_Precio_Local_Ambulancia"].HeaderText = "Clave";
+                grdDatos.Columns["D_Estado"].HeaderText = "Estado";
+                grdDatos.Columns["D_Oficina"].HeaderText = "Oficina";
+                grdDatos.Columns["D_Ciudad"].HeaderText = "Ciudad";
+                grdDatos.Columns["K_Precio_Ambulancia"].Visible = false;
+                grdDatos.Columns["B_Sencillo"].HeaderText = "Sencillo";
+                grdDatos.Columns["B_Local"].HeaderText = "Local";
+                grdDatos.Columns["B_Segundo_Piso"].HeaderText = "Segundo Piso";
+                grdDatos.Columns["B_Oxigeno"].HeaderText = "Oxigeno";
+                BaseBotonCancelar.Visible = true;
+                BaseBotonCancelar.Enabled = true;
+                grdDatos.Focus();
+
+            }
+            catch (Exception)
+            {
+                //MessageBox.Show(ex.Message);
+                MessageBox.Show("NO SE ENCONTRO INFORMACION...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        public override void BaseMetodoInicio()
+        {
+            BaseMetodoRecarga();
+            BaseBotonModificar.Visible = false;
+            BaseBotonAfectar.Visible = false;
+            BaseBotonReporte.Visible = false;
+            BaseBotonBorrar.Visible = false;
+            BaseBotonCancelar.Enabled = false;
+            BaseBotonGuardar.Enabled = false;
+  
+
+            //PROPIEDADES DEL GRID
+            grdDatos.MultiSelect = false;
+            grdDatos.ReadOnly = true;
+            grdDatos.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            grdDatos.BackgroundColor = Color.White;
+            grdDatos.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(46, 70, 209);
+            grdDatos.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            grdDatos.EnableHeadersVisualStyles = false;
+            //
+        }
+        public override void BaseBotonGuardarClick()
+        {
+            if (!BaseFuncionValidaciones())
+                return;
+
+            res = 0;
+            msg = string.Empty;
+
+            DateTime FechaInicial = DateTime.Today;
+            FechaInicial = dtpInicial.Value;
+            DateTime FechaFinal = DateTime.Today;
+            FechaFinal = dtpFinal.Value;
+
+            try
+            {
+                res = catalogosSQL.In_Zonificacion_Local_Precios_Ambulancias(Convert.ToInt16(zonLA_Oficina1.K_Pais), Convert.ToInt32(zonLA_Oficina1.K_Estado), Convert.ToInt16(zonLA_Oficina1.K_Ciudad), Convert.ToInt32(K_Precio_Ambulancia), Convert.ToInt16(zonLA_Oficina1.K_Oficina), Convert.ToDecimal(txtPrecio.Text), FechaInicial, FechaFinal, ref msg);
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("YA ESTA REGISTRADA LA COBERTURA PARA LA CIUDAD CAPPTURADA", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+          
+
+            if (res == -1)
+            {
+                BaseErrorResultado = true;
+                MessageBox.Show(msg, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else
+            {
+                BaseErrorResultado = false;
+                MessageBox.Show("INFORMACION ACTUALIZADA CORRECTAMENTE...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                BaseMetodoInicio();
+                BaseBotonCancelarClick();
+
+                //ME RECARGA EL GRID CON LO QUE SE ACABA DE GUARDAR
+
+            }
+
+        }
+        public override void BaseBotonBuscarClick()
+        {
+
+            DateTime FechaInicial = DateTime.Today;
+            FechaInicial = dtpInicial.Value;
+            DateTime FechaFinal = DateTime.Today;
+            FechaFinal = dtpFinal.Value;
+
+
+            K_Pais = zonLA_Oficina1.K_Pais;
+            K_Estado = zonLA_Oficina1.K_Estado;
+            K_Ciudad = zonLA_Oficina1.K_Ciudad;
+            K_Oficina = zonLA_Oficina1.K_Oficina;
+            K_Precio_Ambulancia = Convert.ToInt32(K_Precio_Ambulancia);
+
+            LLenarGrid(K_Pais, K_Estado, K_Ciudad, K_Precio_Ambulancia, K_Oficina,FechaInicial,FechaFinal);
+            BaseBotonGuardar.Visible = false;
+           
+            //ME VALIDA QUE AL BUSCAR ME DEVUELVA ALGUN REGISTRO PARA MODIFICARLO
+            if (grdDatos.Rows.Count > 0)
+            {
+                BaseBotonModificar.Visible = true;
+                BaseBotonModificar.Enabled = true;
+            }
+     
+
+            //K_Pais = int.Parse(grdDatos.CurrentRow.Cells["K_Pais"].Value.ToString());
+            //K_Estado = int.Parse(grdDatos.CurrentRow.Cells["K_Estado"].Value.ToString());
+            //K_Ciudad = int.Parse(grdDatos.CurrentRow.Cells["K_Ciudad"].Value.ToString());
+            //K_Oficina = int.Parse(grdDatos.CurrentRow.Cells["K_Oficina"].Value.ToString());
+            //K_Precio_Ambulancia = int.Parse(grdDatos.CurrentRow.Cells["K_Precio_Ambulancia"].Value.ToString());
+            //D_Ciudad = grdDatos.CurrentRow.Cells["D_Ciudad"].Value.ToString();
+            //FechaInicial = Convert.ToDateTime(grdDatos.CurrentRow.Cells["F_Inicio"].Value.ToString());
+            //FechaFinal = Convert.ToDateTime(grdDatos.CurrentRow.Cells["F_Final"].Value.ToString());
+            //FRM_ACTUALIZA_ZONIFICACION_LOCAL_PRECIOS_AMBULANCIA actualiza = new FRM_ACTUALIZA_ZONIFICACION_LOCAL_PRECIOS_AMBULANCIA(K_Pais, K_Ciudad, D_Ciudad, K_Estado, K_Oficina, K_Precio_Ambulancia, Convert.ToDecimal(grdDatos.CurrentRow.Cells["Precio"].Value.ToString()), FechaInicial, FechaFinal);
+            //actualiza.ShowDialog(this);
+
+        }
+        public override void BaseBotonNuevoClick()
+        {
+      
+            BaseBotonBuscar.Enabled = true;
+            BaseBotonBuscar.Visible = true;
+            BaseBotonGuardar.Enabled = true;
+            BaseBotonGuardar.Visible = true;
+            pnlControles.Enabled = true;
+            BaseMetodoLimpiaControles();
+            base.BaseBotonNuevoClick();
+        }
+        public override void BaseMetodoLimpiaControles()
+        {
+            zonLA_Oficina1.txt_G_Pais.Text = string.Empty;
+            zonLA_Oficina1.txt_G_Estado.Text = string.Empty;
+            zonLA_Oficina1.txt_G_Ciudad.Text = string.Empty;
+            zonLA_Oficina1.txt_G_Oficina.Text = string.Empty;
+            txt_Caracteristicas.Text = string.Empty;
+            txtPrecio.Text = string.Empty;
+            dtpInicial.Value = DateTime.Now;
+            dtpFinal.Value = DateTime.Now;
+
+
+        }
+        public override void BaseBotonExcelClick()
+        {
+            if (BaseDtDatos == null)
+            {
+                MessageBox.Show("NO EXISTE INFORMACION PARA EXPORTAR...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+            saveFileDialog1.Filter = "Archivos Excel (*.xlsx)|*.xlsx";
+            saveFileDialog1.FilterIndex = 1;
+            saveFileDialog1.RestoreDirectory = true;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string Hoja = "Datos";
+                DataTable dtExcel = datos;
+                BorraColumnaCamposBusqueda(ref dtExcel);
+                fx.ExportToExcel(dtExcel, saveFileDialog1.FileName, Hoja);
+            }
+        }
+        public override void BaseBotonCancelarClick()
+        {
+            grdDatos.DataSource = null;
+            BaseMetodoLimpiaControles();
+        }
+        public override void BaseBotonModificarClick()
+        {
+          
+            BaseBotonGuardar.Enabled = false;
+            K_Precio_Local_Ambulancias = int.Parse(grdDatos.CurrentRow.Cells["K_Precio_Local_Ambulancia"].Value.ToString());
+            K_Pais = int.Parse(grdDatos.CurrentRow.Cells["K_Pais"].Value.ToString());
+            K_Estado = int.Parse(grdDatos.CurrentRow.Cells["K_Estado"].Value.ToString());
+            K_Ciudad = int.Parse(grdDatos.CurrentRow.Cells["K_Ciudad"].Value.ToString());
+            K_Oficina = int.Parse(grdDatos.CurrentRow.Cells["K_Oficina"].Value.ToString());
+            K_Precio_Ambulancia = int.Parse(grdDatos.CurrentRow.Cells["K_Precio_Ambulancia"].Value.ToString());
+            D_Ciudad = grdDatos.CurrentRow.Cells["D_Ciudad"].Value.ToString();
+            FechaInicial = Convert.ToDateTime(grdDatos.CurrentRow.Cells["F_Inicio"].Value.ToString());
+            FechaFinal = Convert.ToDateTime(grdDatos.CurrentRow.Cells["F_Final"].Value.ToString());
+            FRM_ACTUALIZA_ZONIFICACION_LOCAL_PRECIOS_AMBULANCIA actualiza = new FRM_ACTUALIZA_ZONIFICACION_LOCAL_PRECIOS_AMBULANCIA(K_Precio_Local_Ambulancias,K_Pais, K_Ciudad, D_Ciudad, K_Estado, K_Oficina, K_Precio_Ambulancia, Convert.ToDecimal(grdDatos.CurrentRow.Cells["Precio"].Value.ToString()), FechaInicial, FechaFinal);
+            actualiza.ShowDialog(this);
+            base.BaseBotonModificarClick();
+            BaseBotonModificar.Visible = true;
+            BaseBotonModificar.Enabled = true;
+            grdDatos.DataSource = null;
+            LLenarGrid(K_Pais, K_Estado, K_Ciudad, K_Precio_Ambulancia, K_Oficina, FechaInicial, FechaFinal);
+        }
+        public override bool BaseFuncionValidaciones()
+        {
+            BaseErrorResultado = true;
+
+            if (zonLA_Oficina1.txt_G_Pais.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("FALTA CAPTURAR PAIS...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                zonLA_Oficina1.txt_G_Pais.Focus();
+                return false;
+            }
+            if (zonLA_Oficina1.txt_G_Estado.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("FALTA CAPTURAR ESTADO..!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                zonLA_Oficina1.txt_G_Estado.Focus();
+                return false;
+            }
+            if (zonLA_Oficina1.txt_G_Ciudad.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("FALTA CAPTURAR CIUDAD...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                zonLA_Oficina1.txt_G_Ciudad.Focus();
+                return false;
+            }
+            if (zonLA_Oficina1.txt_G_Oficina.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("FALTA CAPTURAR OFICINA..!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                zonLA_Oficina1.Focus();
+                return false;
+            }
+            if (txt_Caracteristicas.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("FALTA CAPTURAR LAS CARACTERISTICAS DE LA AMBULANCIA..!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txt_Caracteristicas.Focus();
+                return false;
+            }
+            if (txtPrecio.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("FALTA CAPTURAR EL PRECIO..!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txt_Caracteristicas.Focus();
+                return false;
+            }
+
+            BaseErrorResultado = false;
+            return true;
+        }
+
+
+    }
+
+
+}       
+
+      
+
+    
+

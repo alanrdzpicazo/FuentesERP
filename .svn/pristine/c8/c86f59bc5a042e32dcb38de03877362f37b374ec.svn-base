@@ -1,0 +1,418 @@
+﻿namespace ProbeMedic.CATALOGOS.PACIENTES
+{
+    partial class FRM_AGREGA_DIRECCION
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_AGREGA_DIRECCION));
+            this.PanelAgerga = new System.Windows.Forms.Panel();
+            this.lblPac = new System.Windows.Forms.Label();
+            this.txtCalle = new System.Windows.Forms.TextBox();
+            this.txtPiso = new System.Windows.Forms.TextBox();
+            this.txtEdificio = new System.Windows.Forms.TextBox();
+            this.txtEntreCalles = new System.Windows.Forms.TextBox();
+            this.btnEliminar = new System.Windows.Forms.Button();
+            this.BtnAplicar = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.btnBuscarTipoDireccion = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtTipoDireccion = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.TxtNumExt = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtNumInt = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtCP = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.geo_Colonia1 = new ProbeMedic.Controles.Geo_Colonia();
+            ((System.ComponentModel.ISupportInitialize)(this.BaseDtDatos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BasedtDatosConFiltro)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BaseDtPermisos)).BeginInit();
+            this.PanelAgerga.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // PanelAgerga
+            // 
+            this.PanelAgerga.Controls.Add(this.lblPac);
+            this.PanelAgerga.Controls.Add(this.txtCalle);
+            this.PanelAgerga.Controls.Add(this.txtPiso);
+            this.PanelAgerga.Controls.Add(this.txtEdificio);
+            this.PanelAgerga.Controls.Add(this.txtEntreCalles);
+            this.PanelAgerga.Controls.Add(this.btnEliminar);
+            this.PanelAgerga.Controls.Add(this.BtnAplicar);
+            this.PanelAgerga.Controls.Add(this.label4);
+            this.PanelAgerga.Controls.Add(this.label3);
+            this.PanelAgerga.Controls.Add(this.label1);
+            this.PanelAgerga.Controls.Add(this.label7);
+            this.PanelAgerga.Controls.Add(this.btnBuscarTipoDireccion);
+            this.PanelAgerga.Controls.Add(this.label9);
+            this.PanelAgerga.Controls.Add(this.txtTipoDireccion);
+            this.PanelAgerga.Controls.Add(this.label5);
+            this.PanelAgerga.Controls.Add(this.label16);
+            this.PanelAgerga.Controls.Add(this.label15);
+            this.PanelAgerga.Controls.Add(this.TxtNumExt);
+            this.PanelAgerga.Controls.Add(this.label13);
+            this.PanelAgerga.Controls.Add(this.txtNumInt);
+            this.PanelAgerga.Controls.Add(this.label12);
+            this.PanelAgerga.Controls.Add(this.txtCP);
+            this.PanelAgerga.Controls.Add(this.label8);
+            this.PanelAgerga.Controls.Add(this.label6);
+            this.PanelAgerga.Controls.Add(this.geo_Colonia1);
+            this.PanelAgerga.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PanelAgerga.Location = new System.Drawing.Point(0, 38);
+            this.PanelAgerga.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.PanelAgerga.Name = "PanelAgerga";
+            this.PanelAgerga.Size = new System.Drawing.Size(1059, 636);
+            this.PanelAgerga.TabIndex = 72;
+            // 
+            // lblPac
+            // 
+            this.lblPac.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(70)))), ((int)(((byte)(209)))));
+            this.lblPac.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblPac.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPac.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblPac.Location = new System.Drawing.Point(0, 0);
+            this.lblPac.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPac.Name = "lblPac";
+            this.lblPac.Size = new System.Drawing.Size(1059, 34);
+            this.lblPac.TabIndex = 71;
+            this.lblPac.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // txtCalle
+            // 
+            this.txtCalle.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtCalle.Location = new System.Drawing.Point(218, 313);
+            this.txtCalle.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
+            this.txtCalle.MaxLength = 0;
+            this.txtCalle.Name = "txtCalle";
+            this.txtCalle.Size = new System.Drawing.Size(580, 28);
+            this.txtCalle.TabIndex = 3;
+            this.txtCalle.Tag = "ENTERO";
+            // 
+            // txtPiso
+            // 
+            this.txtPiso.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtPiso.Location = new System.Drawing.Point(508, 514);
+            this.txtPiso.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
+            this.txtPiso.MaxLength = 5;
+            this.txtPiso.Name = "txtPiso";
+            this.txtPiso.Size = new System.Drawing.Size(68, 28);
+            this.txtPiso.TabIndex = 8;
+            this.txtPiso.Tag = "ENTERO";
+            this.txtPiso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPiso_KeyPress);
+            // 
+            // txtEdificio
+            // 
+            this.txtEdificio.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtEdificio.Location = new System.Drawing.Point(218, 514);
+            this.txtEdificio.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
+            this.txtEdificio.MaxLength = 0;
+            this.txtEdificio.Name = "txtEdificio";
+            this.txtEdificio.Size = new System.Drawing.Size(234, 28);
+            this.txtEdificio.TabIndex = 7;
+            this.txtEdificio.Tag = "ENTERO";
+            // 
+            // txtEntreCalles
+            // 
+            this.txtEntreCalles.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtEntreCalles.Location = new System.Drawing.Point(218, 463);
+            this.txtEntreCalles.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
+            this.txtEntreCalles.MaxLength = 0;
+            this.txtEntreCalles.Name = "txtEntreCalles";
+            this.txtEntreCalles.Size = new System.Drawing.Size(580, 28);
+            this.txtEntreCalles.TabIndex = 6;
+            this.txtEntreCalles.Tag = "ENTERO";
+            // 
+            // btnEliminar
+            // 
+            this.btnEliminar.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnEliminar.Image = ((System.Drawing.Image)(resources.GetObject("btnEliminar.Image")));
+            this.btnEliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEliminar.Location = new System.Drawing.Point(850, 522);
+            this.btnEliminar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.Size = new System.Drawing.Size(127, 76);
+            this.btnEliminar.TabIndex = 10;
+            this.btnEliminar.Text = "      Salir     ";
+            this.btnEliminar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
+            // 
+            // BtnAplicar
+            // 
+            this.BtnAplicar.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.BtnAplicar.Image = ((System.Drawing.Image)(resources.GetObject("BtnAplicar.Image")));
+            this.BtnAplicar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnAplicar.Location = new System.Drawing.Point(671, 522);
+            this.BtnAplicar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnAplicar.Name = "BtnAplicar";
+            this.BtnAplicar.Size = new System.Drawing.Size(127, 76);
+            this.BtnAplicar.TabIndex = 9;
+            this.BtnAplicar.Text = "Agregar";
+            this.BtnAplicar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.BtnAplicar.UseVisualStyleBackColor = true;
+            this.BtnAplicar.Click += new System.EventHandler(this.BtnAplicar_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(460, 517);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(40, 21);
+            this.label4.TabIndex = 64;
+            this.label4.Text = "Piso";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(122, 521);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(63, 21);
+            this.label3.TabIndex = 62;
+            this.label3.Text = "Edificio";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(94, 463);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(91, 21);
+            this.label1.TabIndex = 60;
+            this.label1.Text = "Entre Calle";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(139, 316);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(46, 21);
+            this.label7.TabIndex = 58;
+            this.label7.Text = "Calle";
+            // 
+            // btnBuscarTipoDireccion
+            // 
+            this.btnBuscarTipoDireccion.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscarTipoDireccion.Image")));
+            this.btnBuscarTipoDireccion.Location = new System.Drawing.Point(559, 61);
+            this.btnBuscarTipoDireccion.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
+            this.btnBuscarTipoDireccion.Name = "btnBuscarTipoDireccion";
+            this.btnBuscarTipoDireccion.Size = new System.Drawing.Size(45, 42);
+            this.btnBuscarTipoDireccion.TabIndex = 0;
+            this.btnBuscarTipoDireccion.UseVisualStyleBackColor = true;
+            this.btnBuscarTipoDireccion.Click += new System.EventHandler(this.btnBuscarTipoDireccion_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(41, 64);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(144, 21);
+            this.label9.TabIndex = 56;
+            this.label9.Text = "Tipo de  Dirección";
+            // 
+            // txtTipoDireccion
+            // 
+            this.txtTipoDireccion.Location = new System.Drawing.Point(218, 61);
+            this.txtTipoDireccion.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtTipoDireccion.Name = "txtTipoDireccion";
+            this.txtTipoDireccion.ReadOnly = true;
+            this.txtTipoDireccion.Size = new System.Drawing.Size(317, 28);
+            this.txtTipoDireccion.TabIndex = 55;
+            this.txtTipoDireccion.TabStop = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(145, 121);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(40, 21);
+            this.label5.TabIndex = 53;
+            this.label5.Text = "Pais";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(125, 165);
+            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(61, 21);
+            this.label16.TabIndex = 52;
+            this.label16.Text = "Estado";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(126, 216);
+            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(60, 21);
+            this.label15.TabIndex = 51;
+            this.label15.Text = "Ciudad";
+            // 
+            // TxtNumExt
+            // 
+            this.TxtNumExt.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.TxtNumExt.Location = new System.Drawing.Point(218, 363);
+            this.TxtNumExt.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
+            this.TxtNumExt.MaxLength = 0;
+            this.TxtNumExt.Name = "TxtNumExt";
+            this.TxtNumExt.Size = new System.Drawing.Size(171, 28);
+            this.TxtNumExt.TabIndex = 4;
+            this.TxtNumExt.Tag = "ENTERO";
+            this.TxtNumExt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtNumExt_KeyPress);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(102, 363);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(83, 21);
+            this.label13.TabIndex = 50;
+            this.label13.Text = "Num. Ext.";
+            // 
+            // txtNumInt
+            // 
+            this.txtNumInt.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtNumInt.Location = new System.Drawing.Point(218, 410);
+            this.txtNumInt.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
+            this.txtNumInt.MaxLength = 0;
+            this.txtNumInt.Name = "txtNumInt";
+            this.txtNumInt.Size = new System.Drawing.Size(171, 28);
+            this.txtNumInt.TabIndex = 5;
+            this.txtNumInt.Tag = "ENTERO";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(106, 412);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(80, 21);
+            this.label12.TabIndex = 49;
+            this.label12.Text = "Num. Int.";
+            // 
+            // txtCP
+            // 
+            this.txtCP.Location = new System.Drawing.Point(674, 261);
+            this.txtCP.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
+            this.txtCP.MaxLength = 5;
+            this.txtCP.Name = "txtCP";
+            this.txtCP.Size = new System.Drawing.Size(124, 28);
+            this.txtCP.TabIndex = 2;
+            this.txtCP.Tag = "ENTERO";
+            this.txtCP.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCP_KeyPress);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(626, 264);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(39, 21);
+            this.label8.TabIndex = 48;
+            this.label8.Text = "C.P.";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(121, 264);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(64, 21);
+            this.label6.TabIndex = 47;
+            this.label6.Text = "Colonia";
+            // 
+            // geo_Colonia1
+            // 
+            this.geo_Colonia1.Location = new System.Drawing.Point(213, 106);
+            this.geo_Colonia1.Margin = new System.Windows.Forms.Padding(4, 12, 4, 12);
+            this.geo_Colonia1.Name = "geo_Colonia1";
+            this.geo_Colonia1.Size = new System.Drawing.Size(361, 199);
+            this.geo_Colonia1.TabIndex = 1;
+            // 
+            // FRM_AGREGA_DIRECCION
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1059, 743);
+            this.Controls.Add(this.PanelAgerga);
+            this.Margin = new System.Windows.Forms.Padding(3, 7, 3, 7);
+            this.Name = "FRM_AGREGA_DIRECCION";
+            this.Text = "Agregando Direcciones";
+            this.Controls.SetChildIndex(this.PanelAgerga, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.BaseDtDatos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BasedtDatosConFiltro)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BaseDtPermisos)).EndInit();
+            this.PanelAgerga.ResumeLayout(false);
+            this.PanelAgerga.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Panel PanelAgerga;
+        private System.Windows.Forms.Button btnEliminar;
+        private System.Windows.Forms.Button BtnAplicar;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnBuscarTipoDireccion;
+        private System.Windows.Forms.TextBox txtTipoDireccion;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox TxtNumExt;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txtNumInt;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtCP;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label6;
+        private Controles.Geo_Colonia geo_Colonia1;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtPiso;
+        private System.Windows.Forms.TextBox txtEdificio;
+        private System.Windows.Forms.TextBox txtEntreCalles;
+        private System.Windows.Forms.TextBox txtCalle;
+        private System.Windows.Forms.Label lblPac;
+    }
+}

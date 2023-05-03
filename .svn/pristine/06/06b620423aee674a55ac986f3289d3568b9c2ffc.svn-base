@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="CrystalDecisions.CrystalReports.Engine" version="1.0.0" targetFramework="net461" />
+  <package id="CrystalDecisions.ReportSource" version="1.0.0" targetFramework="net461" />
+  <package id="CrystalDecisions.Shared" version="1.0.0" targetFramework="net461" />
+  <package id="CrystalDecisions.Windows.Forms" version="1.0.0" targetFramework="net461" />
+  <package id="EntityFramework" version="6.2.0" targetFramework="net461" />
+  <package id="EPPlus" version="4.1.0" targetFramework="net461" />
+  <package id="iTextSharp" version="5.5.12" targetFramework="net461" />
+  <package id="Microsoft.Office.Interop.Excel" version="15.0.4795.1000" targetFramework="net461" />
+  <package id="Microsoft.Xaml" version="4.0.0.1" targetFramework="net461" />
+  <package id="Newtonsoft.Json" version="10.0.3" targetFramework="net461" />
+  <package id="NTwain" version="3.5.1" targetFramework="net461" />
+  <package id="Xpand.ExpressApp.Win.Para.WindowsIntegration" version="13.2.6.0" targetFramework="net461" />
+</packages>

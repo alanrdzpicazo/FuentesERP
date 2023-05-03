@@ -1,0 +1,638 @@
+﻿namespace ProbeMedic.INVENTARIOS
+{
+    partial class Frm_Consulta_Movimientos_Transito
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.lblTitulo = new System.Windows.Forms.Label();
+            this.PnlParametros = new System.Windows.Forms.Panel();
+            this.sel_OficinaRecibe = new ProbeMedic.Controles.Sel_Oficina();
+            this.sel_OficinaEnvia = new ProbeMedic.Controles.Sel_Oficina();
+            this.txtConsecutivo = new System.Windows.Forms.TextBox();
+            this.LblConsecutivo = new System.Windows.Forms.Label();
+            this.cbxAlmacenRecibe = new System.Windows.Forms.ComboBox();
+            this.LblAlmacenRecibe = new System.Windows.Forms.Label();
+            this.LblOficinaRecibe = new System.Windows.Forms.Label();
+            this.cBoxFiltroOficinaRecibe = new System.Windows.Forms.CheckBox();
+            this.cbxAlmacenEnvia = new System.Windows.Forms.ComboBox();
+            this.LblAlmacenEnvia = new System.Windows.Forms.Label();
+            this.LblOficinaEnvia = new System.Windows.Forms.Label();
+            this.cBoxFiltroOficinaEnvia = new System.Windows.Forms.CheckBox();
+            this.cBoxFiltroFecha = new System.Windows.Forms.CheckBox();
+            this.PnlFiltroFecha = new System.Windows.Forms.Panel();
+            this.cBoxMes = new System.Windows.Forms.ComboBox();
+            this.LblMes = new System.Windows.Forms.Label();
+            this.NumericUpDwn = new System.Windows.Forms.NumericUpDown();
+            this.LblAnio = new System.Windows.Forms.Label();
+            this.grdDatos = new System.Windows.Forms.DataGridView();
+            this.TipoInventario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ID_Transito = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Consec = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D_Tipo_Movimiento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D_Oficina_Envia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D_Almacen_Envia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D_Oficina_Recibe = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D_Almacen_Recibe = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D_Articulo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PiezasTransfiere = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.KgsTransfiere = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PiezasRecibidas = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Kgs_Recibidos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TipoRecepcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D_Usuario_Movimiento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.F_Movimiento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D_Usuario_Recibe = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.F_Recepcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Observaciones = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.BaseDtDatos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BasedtDatosConFiltro)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BaseDtPermisos)).BeginInit();
+            this.PnlParametros.SuspendLayout();
+            this.PnlFiltroFecha.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDwn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdDatos)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // lblTitulo
+            // 
+            this.lblTitulo.BackColor = System.Drawing.Color.Gray;
+            this.lblTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblTitulo.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitulo.ForeColor = System.Drawing.Color.White;
+            this.lblTitulo.Location = new System.Drawing.Point(0, 38);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(1066, 29);
+            this.lblTitulo.TabIndex = 5;
+            this.lblTitulo.Text = "Consulta de Movimientos en Tránsito";
+            this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // PnlParametros
+            // 
+            this.PnlParametros.Controls.Add(this.sel_OficinaRecibe);
+            this.PnlParametros.Controls.Add(this.sel_OficinaEnvia);
+            this.PnlParametros.Controls.Add(this.txtConsecutivo);
+            this.PnlParametros.Controls.Add(this.LblConsecutivo);
+            this.PnlParametros.Controls.Add(this.cbxAlmacenRecibe);
+            this.PnlParametros.Controls.Add(this.LblAlmacenRecibe);
+            this.PnlParametros.Controls.Add(this.LblOficinaRecibe);
+            this.PnlParametros.Controls.Add(this.cBoxFiltroOficinaRecibe);
+            this.PnlParametros.Controls.Add(this.cbxAlmacenEnvia);
+            this.PnlParametros.Controls.Add(this.LblAlmacenEnvia);
+            this.PnlParametros.Controls.Add(this.LblOficinaEnvia);
+            this.PnlParametros.Controls.Add(this.cBoxFiltroOficinaEnvia);
+            this.PnlParametros.Controls.Add(this.cBoxFiltroFecha);
+            this.PnlParametros.Controls.Add(this.PnlFiltroFecha);
+            this.PnlParametros.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PnlParametros.Location = new System.Drawing.Point(0, 67);
+            this.PnlParametros.Name = "PnlParametros";
+            this.PnlParametros.Size = new System.Drawing.Size(1066, 151);
+            this.PnlParametros.TabIndex = 33;
+            // 
+            // sel_OficinaRecibe
+            // 
+            this.sel_OficinaRecibe.K_Oficina = 0;
+            this.sel_OficinaRecibe.Location = new System.Drawing.Point(759, 70);
+            this.sel_OficinaRecibe.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.sel_OficinaRecibe.Name = "sel_OficinaRecibe";
+            this.sel_OficinaRecibe.Size = new System.Drawing.Size(470, 38);
+            this.sel_OficinaRecibe.TabIndex = 45;
+            // 
+            // sel_OficinaEnvia
+            // 
+            this.sel_OficinaEnvia.K_Oficina = 0;
+            this.sel_OficinaEnvia.Location = new System.Drawing.Point(144, 71);
+            this.sel_OficinaEnvia.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.sel_OficinaEnvia.Name = "sel_OficinaEnvia";
+            this.sel_OficinaEnvia.Size = new System.Drawing.Size(467, 31);
+            this.sel_OficinaEnvia.TabIndex = 44;
+            // 
+            // txtConsecutivo
+            // 
+            this.txtConsecutivo.Location = new System.Drawing.Point(763, 15);
+            this.txtConsecutivo.Name = "txtConsecutivo";
+            this.txtConsecutivo.Size = new System.Drawing.Size(100, 24);
+            this.txtConsecutivo.TabIndex = 43;
+            this.txtConsecutivo.Tag = "0";
+            this.txtConsecutivo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtConsecutivo_KeyPress_1);
+            // 
+            // LblConsecutivo
+            // 
+            this.LblConsecutivo.AutoSize = true;
+            this.LblConsecutivo.Location = new System.Drawing.Point(673, 19);
+            this.LblConsecutivo.Name = "LblConsecutivo";
+            this.LblConsecutivo.Size = new System.Drawing.Size(88, 17);
+            this.LblConsecutivo.TabIndex = 42;
+            this.LblConsecutivo.Text = "Consecutivo ";
+            // 
+            // cbxAlmacenRecibe
+            // 
+            this.cbxAlmacenRecibe.FormattingEnabled = true;
+            this.cbxAlmacenRecibe.Location = new System.Drawing.Point(763, 108);
+            this.cbxAlmacenRecibe.Name = "cbxAlmacenRecibe";
+            this.cbxAlmacenRecibe.Size = new System.Drawing.Size(456, 24);
+            this.cbxAlmacenRecibe.TabIndex = 39;
+            // 
+            // LblAlmacenRecibe
+            // 
+            this.LblAlmacenRecibe.AutoSize = true;
+            this.LblAlmacenRecibe.Location = new System.Drawing.Point(658, 109);
+            this.LblAlmacenRecibe.Name = "LblAlmacenRecibe";
+            this.LblAlmacenRecibe.Size = new System.Drawing.Size(103, 17);
+            this.LblAlmacenRecibe.TabIndex = 41;
+            this.LblAlmacenRecibe.Text = "Almacén Recibe";
+            // 
+            // LblOficinaRecibe
+            // 
+            this.LblOficinaRecibe.AutoSize = true;
+            this.LblOficinaRecibe.Location = new System.Drawing.Point(669, 79);
+            this.LblOficinaRecibe.Name = "LblOficinaRecibe";
+            this.LblOficinaRecibe.Size = new System.Drawing.Size(92, 17);
+            this.LblOficinaRecibe.TabIndex = 40;
+            this.LblOficinaRecibe.Text = "Oficina Recibe";
+            // 
+            // cBoxFiltroOficinaRecibe
+            // 
+            this.cBoxFiltroOficinaRecibe.AutoSize = true;
+            this.cBoxFiltroOficinaRecibe.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cBoxFiltroOficinaRecibe.Location = new System.Drawing.Point(660, 52);
+            this.cBoxFiltroOficinaRecibe.Name = "cBoxFiltroOficinaRecibe";
+            this.cBoxFiltroOficinaRecibe.Size = new System.Drawing.Size(226, 18);
+            this.cBoxFiltroOficinaRecibe.TabIndex = 37;
+            this.cBoxFiltroOficinaRecibe.Text = "Filtro por Oficina y/o Almacén Recibe";
+            this.cBoxFiltroOficinaRecibe.UseVisualStyleBackColor = true;
+            this.cBoxFiltroOficinaRecibe.CheckedChanged += new System.EventHandler(this.cBoxFiltroOficinaRecibe_CheckedChanged);
+            // 
+            // cbxAlmacenEnvia
+            // 
+            this.cbxAlmacenEnvia.FormattingEnabled = true;
+            this.cbxAlmacenEnvia.Location = new System.Drawing.Point(144, 107);
+            this.cbxAlmacenEnvia.Name = "cbxAlmacenEnvia";
+            this.cbxAlmacenEnvia.Size = new System.Drawing.Size(456, 24);
+            this.cbxAlmacenEnvia.TabIndex = 34;
+            // 
+            // LblAlmacenEnvia
+            // 
+            this.LblAlmacenEnvia.AutoSize = true;
+            this.LblAlmacenEnvia.Location = new System.Drawing.Point(45, 109);
+            this.LblAlmacenEnvia.Name = "LblAlmacenEnvia";
+            this.LblAlmacenEnvia.Size = new System.Drawing.Size(96, 17);
+            this.LblAlmacenEnvia.TabIndex = 36;
+            this.LblAlmacenEnvia.Text = "Almacén Envia";
+            // 
+            // LblOficinaEnvia
+            // 
+            this.LblOficinaEnvia.AutoSize = true;
+            this.LblOficinaEnvia.Location = new System.Drawing.Point(56, 79);
+            this.LblOficinaEnvia.Name = "LblOficinaEnvia";
+            this.LblOficinaEnvia.Size = new System.Drawing.Size(85, 17);
+            this.LblOficinaEnvia.TabIndex = 35;
+            this.LblOficinaEnvia.Text = "Oficina Envía";
+            // 
+            // cBoxFiltroOficinaEnvia
+            // 
+            this.cBoxFiltroOficinaEnvia.AutoSize = true;
+            this.cBoxFiltroOficinaEnvia.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cBoxFiltroOficinaEnvia.Location = new System.Drawing.Point(12, 52);
+            this.cBoxFiltroOficinaEnvia.Name = "cBoxFiltroOficinaEnvia";
+            this.cBoxFiltroOficinaEnvia.Size = new System.Drawing.Size(218, 18);
+            this.cBoxFiltroOficinaEnvia.TabIndex = 32;
+            this.cBoxFiltroOficinaEnvia.Text = "Filtro por Oficina y/o Almacén Envía";
+            this.cBoxFiltroOficinaEnvia.UseVisualStyleBackColor = true;
+            this.cBoxFiltroOficinaEnvia.CheckedChanged += new System.EventHandler(this.cBoxFiltroOficinaEnvia_CheckedChanged);
+            // 
+            // cBoxFiltroFecha
+            // 
+            this.cBoxFiltroFecha.AutoSize = true;
+            this.cBoxFiltroFecha.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cBoxFiltroFecha.Location = new System.Drawing.Point(12, 19);
+            this.cBoxFiltroFecha.Name = "cBoxFiltroFecha";
+            this.cBoxFiltroFecha.Size = new System.Drawing.Size(110, 18);
+            this.cBoxFiltroFecha.TabIndex = 31;
+            this.cBoxFiltroFecha.Text = "Filtro por Fecha";
+            this.cBoxFiltroFecha.UseVisualStyleBackColor = true;
+            this.cBoxFiltroFecha.CheckedChanged += new System.EventHandler(this.cBoxFiltroFecha_CheckedChanged);
+            // 
+            // PnlFiltroFecha
+            // 
+            this.PnlFiltroFecha.Controls.Add(this.cBoxMes);
+            this.PnlFiltroFecha.Controls.Add(this.LblMes);
+            this.PnlFiltroFecha.Controls.Add(this.NumericUpDwn);
+            this.PnlFiltroFecha.Controls.Add(this.LblAnio);
+            this.PnlFiltroFecha.Location = new System.Drawing.Point(144, 10);
+            this.PnlFiltroFecha.Name = "PnlFiltroFecha";
+            this.PnlFiltroFecha.Size = new System.Drawing.Size(494, 34);
+            this.PnlFiltroFecha.TabIndex = 29;
+            // 
+            // cBoxMes
+            // 
+            this.cBoxMes.FormattingEnabled = true;
+            this.cBoxMes.Items.AddRange(new object[] {
+            "Todos",
+            "Enero",
+            "Febrero",
+            "Marzo",
+            "Abril",
+            "Mayo",
+            "Junio",
+            "Julio",
+            "Agosto",
+            "Septiembre",
+            "Octubre",
+            "Noviembre",
+            "Diciembre"});
+            this.cBoxMes.Location = new System.Drawing.Point(150, 4);
+            this.cBoxMes.Name = "cBoxMes";
+            this.cBoxMes.Size = new System.Drawing.Size(181, 24);
+            this.cBoxMes.TabIndex = 31;
+            // 
+            // LblMes
+            // 
+            this.LblMes.AutoSize = true;
+            this.LblMes.Location = new System.Drawing.Point(116, 7);
+            this.LblMes.Name = "LblMes";
+            this.LblMes.Size = new System.Drawing.Size(31, 17);
+            this.LblMes.TabIndex = 32;
+            this.LblMes.Text = "Mes";
+            // 
+            // NumericUpDwn
+            // 
+            this.NumericUpDwn.Location = new System.Drawing.Point(41, 5);
+            this.NumericUpDwn.Maximum = new decimal(new int[] {
+            3500,
+            0,
+            0,
+            0});
+            this.NumericUpDwn.Minimum = new decimal(new int[] {
+            2015,
+            0,
+            0,
+            0});
+            this.NumericUpDwn.Name = "NumericUpDwn";
+            this.NumericUpDwn.Size = new System.Drawing.Size(64, 24);
+            this.NumericUpDwn.TabIndex = 29;
+            this.NumericUpDwn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NumericUpDwn.Value = new decimal(new int[] {
+            2015,
+            0,
+            0,
+            0});
+            // 
+            // LblAnio
+            // 
+            this.LblAnio.AutoSize = true;
+            this.LblAnio.Location = new System.Drawing.Point(5, 7);
+            this.LblAnio.Name = "LblAnio";
+            this.LblAnio.Size = new System.Drawing.Size(32, 17);
+            this.LblAnio.TabIndex = 30;
+            this.LblAnio.Text = "Año";
+            // 
+            // grdDatos
+            // 
+            this.grdDatos.AllowUserToAddRows = false;
+            this.grdDatos.AllowUserToDeleteRows = false;
+            this.grdDatos.AllowUserToResizeColumns = false;
+            this.grdDatos.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.grdDatos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdDatos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.grdDatos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.TipoInventario,
+            this.ID_Transito,
+            this.Consec,
+            this.D_Tipo_Movimiento,
+            this.D_Oficina_Envia,
+            this.D_Almacen_Envia,
+            this.D_Oficina_Recibe,
+            this.D_Almacen_Recibe,
+            this.D_Articulo,
+            this.PiezasTransfiere,
+            this.KgsTransfiere,
+            this.PiezasRecibidas,
+            this.Kgs_Recibidos,
+            this.TipoRecepcion,
+            this.D_Usuario_Movimiento,
+            this.F_Movimiento,
+            this.D_Usuario_Recibe,
+            this.F_Recepcion,
+            this.Observaciones});
+            this.grdDatos.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grdDatos.Location = new System.Drawing.Point(0, 218);
+            this.grdDatos.MultiSelect = false;
+            this.grdDatos.Name = "grdDatos";
+            this.grdDatos.ReadOnly = true;
+            this.grdDatos.RowHeadersVisible = false;
+            this.grdDatos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grdDatos.ShowEditingIcon = false;
+            this.grdDatos.Size = new System.Drawing.Size(1066, 289);
+            this.grdDatos.TabIndex = 34;
+            // 
+            // TipoInventario
+            // 
+            this.TipoInventario.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.TipoInventario.DataPropertyName = "TipoInventario";
+            this.TipoInventario.HeaderText = "Tipo";
+            this.TipoInventario.MinimumWidth = 85;
+            this.TipoInventario.Name = "TipoInventario";
+            this.TipoInventario.ReadOnly = true;
+            this.TipoInventario.Width = 85;
+            // 
+            // ID_Transito
+            // 
+            this.ID_Transito.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.ID_Transito.DataPropertyName = "ID_Transito";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.ID_Transito.DefaultCellStyle = dataGridViewCellStyle3;
+            this.ID_Transito.HeaderText = "ID Transito";
+            this.ID_Transito.MinimumWidth = 75;
+            this.ID_Transito.Name = "ID_Transito";
+            this.ID_Transito.ReadOnly = true;
+            // 
+            // Consec
+            // 
+            this.Consec.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Consec.DataPropertyName = "Consecutivo";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.NullValue = "0";
+            this.Consec.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Consec.HeaderText = "Consecutivo";
+            this.Consec.MinimumWidth = 65;
+            this.Consec.Name = "Consec";
+            this.Consec.ReadOnly = true;
+            this.Consec.Width = 109;
+            // 
+            // D_Tipo_Movimiento
+            // 
+            this.D_Tipo_Movimiento.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.D_Tipo_Movimiento.DataPropertyName = "D_Tipo_Movimiento";
+            this.D_Tipo_Movimiento.HeaderText = "Tipo Mov.";
+            this.D_Tipo_Movimiento.MinimumWidth = 145;
+            this.D_Tipo_Movimiento.Name = "D_Tipo_Movimiento";
+            this.D_Tipo_Movimiento.ReadOnly = true;
+            this.D_Tipo_Movimiento.Width = 145;
+            // 
+            // D_Oficina_Envia
+            // 
+            this.D_Oficina_Envia.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.D_Oficina_Envia.DataPropertyName = "D_Oficina_Envia";
+            this.D_Oficina_Envia.HeaderText = "Of. Envía";
+            this.D_Oficina_Envia.MinimumWidth = 250;
+            this.D_Oficina_Envia.Name = "D_Oficina_Envia";
+            this.D_Oficina_Envia.ReadOnly = true;
+            this.D_Oficina_Envia.Width = 250;
+            // 
+            // D_Almacen_Envia
+            // 
+            this.D_Almacen_Envia.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.D_Almacen_Envia.DataPropertyName = "D_Almacen_Envia";
+            this.D_Almacen_Envia.HeaderText = "Almacén Envía";
+            this.D_Almacen_Envia.MinimumWidth = 220;
+            this.D_Almacen_Envia.Name = "D_Almacen_Envia";
+            this.D_Almacen_Envia.ReadOnly = true;
+            this.D_Almacen_Envia.Width = 220;
+            // 
+            // D_Oficina_Recibe
+            // 
+            this.D_Oficina_Recibe.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.D_Oficina_Recibe.DataPropertyName = "D_Oficina_Recibe";
+            this.D_Oficina_Recibe.HeaderText = "Of. Recibe";
+            this.D_Oficina_Recibe.MinimumWidth = 250;
+            this.D_Oficina_Recibe.Name = "D_Oficina_Recibe";
+            this.D_Oficina_Recibe.ReadOnly = true;
+            this.D_Oficina_Recibe.Width = 250;
+            // 
+            // D_Almacen_Recibe
+            // 
+            this.D_Almacen_Recibe.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.D_Almacen_Recibe.DataPropertyName = "D_Almacen_Recibe";
+            this.D_Almacen_Recibe.HeaderText = "Almacén Recibe";
+            this.D_Almacen_Recibe.MinimumWidth = 220;
+            this.D_Almacen_Recibe.Name = "D_Almacen_Recibe";
+            this.D_Almacen_Recibe.ReadOnly = true;
+            this.D_Almacen_Recibe.Width = 220;
+            // 
+            // D_Articulo
+            // 
+            this.D_Articulo.DataPropertyName = "D_Articulo";
+            this.D_Articulo.HeaderText = "Artículo";
+            this.D_Articulo.Name = "D_Articulo";
+            this.D_Articulo.ReadOnly = true;
+            // 
+            // PiezasTransfiere
+            // 
+            this.PiezasTransfiere.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.PiezasTransfiere.DataPropertyName = "PiezasTransfiere";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.PiezasTransfiere.DefaultCellStyle = dataGridViewCellStyle5;
+            this.PiezasTransfiere.HeaderText = "Pzas Transf.";
+            this.PiezasTransfiere.MinimumWidth = 50;
+            this.PiezasTransfiere.Name = "PiezasTransfiere";
+            this.PiezasTransfiere.ReadOnly = true;
+            this.PiezasTransfiere.Width = 106;
+            // 
+            // KgsTransfiere
+            // 
+            this.KgsTransfiere.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.KgsTransfiere.DataPropertyName = "KgsTransfiere";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.KgsTransfiere.DefaultCellStyle = dataGridViewCellStyle6;
+            this.KgsTransfiere.HeaderText = "KgsTransf.";
+            this.KgsTransfiere.MinimumWidth = 60;
+            this.KgsTransfiere.Name = "KgsTransfiere";
+            this.KgsTransfiere.ReadOnly = true;
+            this.KgsTransfiere.Visible = false;
+            // 
+            // PiezasRecibidas
+            // 
+            this.PiezasRecibidas.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.PiezasRecibidas.DataPropertyName = "PiezasRecibidas";
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.PiezasRecibidas.DefaultCellStyle = dataGridViewCellStyle7;
+            this.PiezasRecibidas.HeaderText = "Pzas Recib";
+            this.PiezasRecibidas.MinimumWidth = 50;
+            this.PiezasRecibidas.Name = "PiezasRecibidas";
+            this.PiezasRecibidas.ReadOnly = true;
+            this.PiezasRecibidas.Visible = false;
+            // 
+            // Kgs_Recibidos
+            // 
+            this.Kgs_Recibidos.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Kgs_Recibidos.DataPropertyName = "Kgs_Recibidos";
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Kgs_Recibidos.DefaultCellStyle = dataGridViewCellStyle8;
+            this.Kgs_Recibidos.HeaderText = "KgsRecib.";
+            this.Kgs_Recibidos.MinimumWidth = 60;
+            this.Kgs_Recibidos.Name = "Kgs_Recibidos";
+            this.Kgs_Recibidos.ReadOnly = true;
+            this.Kgs_Recibidos.Visible = false;
+            // 
+            // TipoRecepcion
+            // 
+            this.TipoRecepcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.TipoRecepcion.DataPropertyName = "TipoRecepcion";
+            this.TipoRecepcion.HeaderText = "Tipo Recep.";
+            this.TipoRecepcion.MinimumWidth = 120;
+            this.TipoRecepcion.Name = "TipoRecepcion";
+            this.TipoRecepcion.ReadOnly = true;
+            this.TipoRecepcion.Width = 120;
+            // 
+            // D_Usuario_Movimiento
+            // 
+            this.D_Usuario_Movimiento.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.D_Usuario_Movimiento.DataPropertyName = "D_Usuario_Movimiento";
+            this.D_Usuario_Movimiento.HeaderText = "Usuario Envía";
+            this.D_Usuario_Movimiento.MinimumWidth = 250;
+            this.D_Usuario_Movimiento.Name = "D_Usuario_Movimiento";
+            this.D_Usuario_Movimiento.ReadOnly = true;
+            this.D_Usuario_Movimiento.Width = 250;
+            // 
+            // F_Movimiento
+            // 
+            this.F_Movimiento.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.F_Movimiento.DataPropertyName = "F_Movimiento";
+            this.F_Movimiento.HeaderText = "Fec. Movimiento";
+            this.F_Movimiento.MinimumWidth = 160;
+            this.F_Movimiento.Name = "F_Movimiento";
+            this.F_Movimiento.ReadOnly = true;
+            this.F_Movimiento.Width = 160;
+            // 
+            // D_Usuario_Recibe
+            // 
+            this.D_Usuario_Recibe.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.D_Usuario_Recibe.DataPropertyName = "D_Usuario_Recibe";
+            this.D_Usuario_Recibe.HeaderText = "Usuario Recibe";
+            this.D_Usuario_Recibe.MinimumWidth = 250;
+            this.D_Usuario_Recibe.Name = "D_Usuario_Recibe";
+            this.D_Usuario_Recibe.ReadOnly = true;
+            this.D_Usuario_Recibe.Width = 250;
+            // 
+            // F_Recepcion
+            // 
+            this.F_Recepcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.F_Recepcion.DataPropertyName = "F_Recepcion";
+            this.F_Recepcion.HeaderText = "Fec. Recepción";
+            this.F_Recepcion.MinimumWidth = 140;
+            this.F_Recepcion.Name = "F_Recepcion";
+            this.F_Recepcion.ReadOnly = true;
+            this.F_Recepcion.Width = 140;
+            // 
+            // Observaciones
+            // 
+            this.Observaciones.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Observaciones.DataPropertyName = "Observaciones";
+            this.Observaciones.HeaderText = "Observaciones";
+            this.Observaciones.MinimumWidth = 500;
+            this.Observaciones.Name = "Observaciones";
+            this.Observaciones.ReadOnly = true;
+            this.Observaciones.Width = 500;
+            // 
+            // Frm_Consulta_Movimientos_Transito
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1066, 546);
+            this.Controls.Add(this.grdDatos);
+            this.Controls.Add(this.PnlParametros);
+            this.Controls.Add(this.lblTitulo);
+            this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.Name = "Frm_Consulta_Movimientos_Transito";
+            this.Text = "CONSULTA DE MOVIMIENTOS EN TRANSITO";
+            this.Controls.SetChildIndex(this.lblTitulo, 0);
+            this.Controls.SetChildIndex(this.PnlParametros, 0);
+            this.Controls.SetChildIndex(this.grdDatos, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.BaseDtDatos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BasedtDatosConFiltro)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BaseDtPermisos)).EndInit();
+            this.PnlParametros.ResumeLayout(false);
+            this.PnlParametros.PerformLayout();
+            this.PnlFiltroFecha.ResumeLayout(false);
+            this.PnlFiltroFecha.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDwn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdDatos)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Label lblTitulo;
+        private System.Windows.Forms.Panel PnlParametros;
+        private Controles.Sel_Oficina sel_OficinaRecibe;
+        private Controles.Sel_Oficina sel_OficinaEnvia;
+        private System.Windows.Forms.TextBox txtConsecutivo;
+        private System.Windows.Forms.Label LblConsecutivo;
+        private System.Windows.Forms.ComboBox cbxAlmacenRecibe;
+        private System.Windows.Forms.Label LblAlmacenRecibe;
+        private System.Windows.Forms.Label LblOficinaRecibe;
+        private System.Windows.Forms.CheckBox cBoxFiltroOficinaRecibe;
+        private System.Windows.Forms.ComboBox cbxAlmacenEnvia;
+        private System.Windows.Forms.Label LblAlmacenEnvia;
+        private System.Windows.Forms.Label LblOficinaEnvia;
+        private System.Windows.Forms.CheckBox cBoxFiltroOficinaEnvia;
+        private System.Windows.Forms.CheckBox cBoxFiltroFecha;
+        private System.Windows.Forms.Panel PnlFiltroFecha;
+        private System.Windows.Forms.ComboBox cBoxMes;
+        private System.Windows.Forms.Label LblMes;
+        private System.Windows.Forms.NumericUpDown NumericUpDwn;
+        private System.Windows.Forms.Label LblAnio;
+        private System.Windows.Forms.DataGridView grdDatos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TipoInventario;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID_Transito;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Consec;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D_Tipo_Movimiento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D_Oficina_Envia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D_Almacen_Envia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D_Oficina_Recibe;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D_Almacen_Recibe;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D_Articulo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PiezasTransfiere;
+        private System.Windows.Forms.DataGridViewTextBoxColumn KgsTransfiere;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PiezasRecibidas;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Kgs_Recibidos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TipoRecepcion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D_Usuario_Movimiento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn F_Movimiento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D_Usuario_Recibe;
+        private System.Windows.Forms.DataGridViewTextBoxColumn F_Recepcion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Observaciones;
+    }
+}

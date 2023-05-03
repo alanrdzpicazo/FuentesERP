@@ -1,0 +1,669 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Windows.Forms;
+using ProbeMedic.AppCode.BLL;
+using System.Reflection;
+using System.ComponentModel;
+using System.Drawing;
+using System.Text;
+using ProbeMedic.AppCode.DCC;
+
+namespace ProbeMedic.PEDIDOS
+{
+    public partial class FRM_FACTURACION_PEDIDOS : FormaBase
+    {
+        SQLCatalogos sql_pxe = new SQLCatalogos();
+        SQLVentas sql_ventas = new SQLVentas();
+        SQLPedidos sql_pedidos = new SQLPedidos();
+
+        DataTable dtDatos = new DataTable();
+        DataTable dtDetalle = new DataTable();
+        DataTable dtPaso = new DataTable();
+        DataTable dtAlmacen = new DataTable();
+
+        public FRM_FACTURACION_PEDIDOS()
+        {
+            InitializeComponent();
+        }
+
+        public override void BaseMetodoInicio()
+        {
+            BaseBotonNuevo.Visible = false;
+            BaseBotonNuevo.Enabled = false;
+            BaseBotonModificar.Visible = false;
+            BaseBotonModificar.Enabled = false;
+            BaseBotonGuardar.Visible = false;
+            BaseBotonGuardar.Enabled = false;
+            BaseBotonBuscar.Visible = true;
+            BaseBotonBuscar.Enabled = true;
+            BaseBotonCancelar.Visible = false;
+            BaseBotonCancelar.Enabled = false;
+            BaseBotonBorrar.Visible = false;
+            BaseBotonBorrar.Enabled = false;
+            BaseBotonAfectar.Visible = false;
+            BaseBotonAfectar.Enabled = false;
+            BaseBotonReporte.Visible = false;
+            BaseBotonReporte.Enabled = false;
+            BaseBotonExcel.Visible = false;
+            BaseBotonExcel.Enabled = false;
+
+            BaseBotonProceso1.Image = ((System.Drawing.Image)(imageList1.Images["file_acrobat.gif"]));
+            BaseBotonProceso1.Text = "Facturar";
+            BaseBotonProceso1.ToolTipText = "Facturar Pedido..";
+
+            BaseBotonProceso2.Image = ((System.Drawing.Image)(imageList1.Images["if_edit-clear_118917.png"]));
+            BaseBotonProceso2.Text = "Limpiar";
+
+            grdDatos.AutoGenerateColumns = false;
+            grdDatos.ScrollBars = ScrollBars.Both;
+            WindowState = FormWindowState.Maximized;
+
+            cargaAlmacenes();
+
+        }
+
+        public override void BaseBotonBuscarClick()
+        {
+            //if (txtClaveCliente.Text.Trim().Length == 0)
+            //{
+            //    MessageBox.Show("FALTA SELECCIONAR CLIENTE...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+            if (rbPedidos.Checked)
+            {
+
+                dtDatos = sql_pedidos.SK_Pedidos_Factura(txtClaveCliente.Text.Trim().Length == 0 ? 0 : Convert.ToInt32(txtClaveCliente.Text.Trim()),
+                                                         txtClavePaciente.Text.Trim().Length == 0 ? 0 : Convert.ToInt32(txtClavePaciente.Text.Trim()),
+                                                         txtDocumento.Text.Trim().Length == 0 ? 0 : Convert.ToInt32(txtDocumento.Text.Trim()), 0,dtpInicial.Value,dtpFinal.Value);
+            }
+            if (rbRemisiones.Checked)
+            {
+                dtDatos = sql_pedidos.SK_Pedidos_Factura(txtClaveCliente.Text.Trim().Length == 0 ? 0 : Convert.ToInt32(txtClaveCliente.Text.Trim()),
+                                                         txtClavePaciente.Text.Trim().Length == 0 ? 0 : Convert.ToInt32(txtClavePaciente.Text.Trim()),
+                                                         0, txtDocumento.Text.Trim().Length == 0 ? 0 : Convert.ToInt32(txtDocumento.Text.Trim()), dtpInicial.Value, dtpFinal.Value);
+            }
+            if (rbCoaseguro.Checked)
+            {
+                dtDatos = sql_pedidos.SK_Pedidos_Factura(txtClaveCliente.Text.Trim().Length == 0 ? 0 : Convert.ToInt32(txtClaveCliente.Text.Trim()),
+                                                         txtClavePaciente.Text.Trim().Length == 0 ? 0 : Convert.ToInt32(txtClavePaciente.Text.Trim()),
+                                                         txtDocumento.Text.Trim().Length == 0 ? 0 : Convert.ToInt32(txtDocumento.Text.Trim()), 0, dtpInicial.Value, dtpFinal.Value);
+            }
+            if (!rbtnPrivada.Checked)
+            {
+                if (dtDatos == null)
+                {
+                    MessageBox.Show("NO SE ENCONTRO INFORMACION!...", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    limpia();
+                    return;
+                }
+                else if (dtDatos != null)
+                {
+                    dtDatos.Columns.Add(new DataColumn("Seleccionar", typeof(bool)));
+
+                    foreach (DataRow dr in dtDatos.Rows)
+                    {
+                        dr["Seleccionar"] = false;
+                    }
+                    grdDatos.DataSource = dtDatos;
+                    BaseBotonProceso1.Visible = true;
+                    BaseBotonProceso1.Enabled = true;
+                    BaseBotonProceso2.Visible = true;
+                    BaseBotonProceso2.Enabled = true;
+                }
+                else
+                {
+                    BaseBotonProceso1.Visible = false;
+                    BaseBotonProceso1.Enabled = false;
+                    BaseBotonProceso2.Visible = false;
+                    BaseBotonProceso2.Enabled = false;
+                }
+
+            }
+
+
+        }
+
+        public override void BaseBotonProceso1Click()
+        {
+            bool B_Entrar = true;
+            if (rbPedidos.Checked)
+            {
+                int Contador = 0;
+                PEDIDOS.FRM_REGISTRA_FACTURAS_PEDIDOS frm = new PEDIDOS.FRM_REGISTRA_FACTURAS_PEDIDOS();
+                foreach (DataGridViewRow RowGrid in grdDatos.Rows)
+                {
+                    grdDatos.EndEdit();
+                    DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)RowGrid.Cells[0];
+
+                    if (chk != null)
+                    {
+                        if ((bool)((chk.Value.ToString() == "") ? false : chk.Value) == true)
+                        {
+                            Contador += 1;
+                            if (txtDocumento.Text.Trim().Length == 0)
+                            {
+                                dtPaso = sql_ventas.Sk_pedidos_detalle(Convert.ToInt32(RowGrid.Cells["K_Pedido"].Value.ToString()));
+
+                                if (dtPaso == null)
+                                {
+                                    MessageBox.Show(String.Format("EL PEDIDO [{0}] NO CUENTA CON DETALLE DE ARTICULOS!...", RowGrid.Cells["K_Pedido"].Value.ToString()), "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return;
+      
+                                }
+                            }
+                            else
+                            {
+                                DataTable dtPaso = sql_ventas.Sk_pedidos_detalle(Convert.ToInt32(txtDocumento.Text));
+                                if (dtPaso == null)
+                                {
+                                    MessageBox.Show(String.Format("EL PEDIDO [{0}] NO CUENTA CON DETALLE DE ARTICULOS!...", txtDocumento.Text.Trim(), "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning));
+                                    return;
+
+                                }
+                            }
+                            if (B_Entrar == true)
+                            {
+                                frm.K_OficinaInt = Convert.ToInt32(RowGrid.Cells["K_Oficina"].Value.ToString());
+                                frm.D_OficinaString = RowGrid.Cells["D_Oficina"].Value.ToString();
+                                frm.K_AlmacenInt = Convert.ToInt32(RowGrid.Cells["K_Almacen"].Value.ToString());
+                                frm.K_MedicoInt = RowGrid.Cells["K_Medico"].Value.ToString() !=""? Convert.ToInt32(RowGrid.Cells["K_Medico"].Value.ToString()):0;
+                                frm.D_MedicoString = RowGrid.Cells["D_Medico"].Value.ToString() != "" ? RowGrid.Cells["D_Medico"].Value.ToString():"";
+                                frm.K_PacienteInt = RowGrid.Cells["K_Paciente"].Value.ToString() !=""?Convert.ToInt32(RowGrid.Cells["K_Paciente"].Value.ToString()):0;
+                                frm.D_PacienteString = RowGrid.Cells["D_Paciente"].Value.ToString()!=""? RowGrid.Cells["D_Paciente"].Value.ToString():"";
+                                frm.K_Paciente_DireccionInt = RowGrid.Cells["K_Paciente_Direccion"].Value.ToString() !=""?Convert.ToInt32(RowGrid.Cells["K_Paciente_Direccion"].Value.ToString()):0;
+                                frm.K_ClienteInt = Convert.ToInt32(RowGrid.Cells["K_Cliente"].Value.ToString());
+                                frm.K_AsesorInt = RowGrid.Cells["K_Asesor"].Value.ToString() != DBNull.Value.ToString() ? Convert.ToInt32(RowGrid.Cells["K_Asesor"].Value.ToString()) : 0;
+                                frm.NombreString = grdDatos.CurrentRow.Cells["Nombre"].Value.ToString() != "" ? grdDatos.CurrentRow.Cells["Nombre"].Value.ToString() : DBNull.Value.ToString();
+                                frm.D_ClienteString = RowGrid.Cells["D_Cliente"].Value.ToString();
+                                frm.K_Cliente_Domicilio_FiscalInt = Convert.ToInt32(RowGrid.Cells["K_Cliente_Domicilio_Fiscal"].Value.ToString());
+                                frm.D_Cliente_Domicilio_FiscalString = RowGrid.Cells["Direccion_Fiscal"].Value.ToString();
+                                frm.K_Canal_DistribucionInt = Convert.ToInt32(grdDatos.CurrentRow.Cells["K_Canal_Distribucion_Cliente"].Value.ToString());
+                                frm.D_Canal_DistrbucionString = grdDatos.CurrentRow.Cells["D_Canal_Distribucion_Cliente"].Value.ToString();
+                                frm.F_Vencimiento = Convert.ToDateTime(RowGrid.Cells["F_Vencimiento"].Value.ToString());
+                                frm.ObservacionesString = RowGrid.Cells["Nota"].Value.ToString();
+                                frm.K_PedidoInt = Convert.ToInt32(RowGrid.Cells["K_Pedido"].Value.ToString());
+                                frm.FolioString = RowGrid.Cells["K_Pedido"].Value.ToString();
+                                frm.SiniestroString = RowGrid.Cells["Siniestro_Pedido"].Value.ToString() != DBNull.Value.ToString() ? RowGrid.Cells["Siniestro_Pedido"].Value.ToString() : DBNull.Value.ToString();
+                                frm.ReclamacionString = RowGrid.Cells["Reclamacion_Pedido"].Value.ToString() != "" ? RowGrid.Cells["Reclamacion_Pedido"].Value.ToString() : DBNull.Value.ToString();
+                                frm.CoaseguroString = RowGrid.Cells["Coaseguro_Pedido"].Value.ToString() != "" ? RowGrid.Cells["Coaseguro_Pedido"].Value.ToString() : DBNull.Value.ToString();
+                                frm.PorcentajeDescuentoDecimal = Convert.ToDecimal(RowGrid.Cells["Porcentaje_Descuento"].Value.ToString());
+                                frm.CoaseguroDecimal = RowGrid.Cells["Coaseguro_Pedido"].Value.ToString() != "" ? Convert.ToDecimal(RowGrid.Cells["Coaseguro_Pedido"].Value.ToString()) : 0;
+                                frm.PorcentajeCoaseguroDecimal = RowGrid.Cells["PorcentajeCoaseguro"].Value.ToString() != "" ? Convert.ToDecimal(RowGrid.Cells["PorcentajeCoaseguro"].Value.ToString()) : 0;
+                                frm.SubtotalDecimal = Convert.ToDecimal(RowGrid.Cells["SubTotal"].Value.ToString());
+                                frm.Total_IVADecimal = Convert.ToDecimal(RowGrid.Cells["Total_Iva"].Value.ToString());
+                                frm.DescuentolDecimal = Convert.ToDecimal(RowGrid.Cells["Descuento"].Value.ToString());
+                                frm.Total_PedidoDecimal = Convert.ToDecimal(RowGrid.Cells["Total_Pedido"].Value.ToString());
+                                frm.CartaString = RowGrid.Cells["Carta"].Value.ToString();
+                                frm.PolizaString = RowGrid.Cells["Poliza"].Value.ToString();
+                                frm.K_CelulaInt = RowGrid.Cells["K_Celula"].Value.ToString()!=""?Convert.ToInt32(RowGrid.Cells["K_Celula"].Value.ToString()):0;
+                                frm.CelulaString = RowGrid.Cells["Celula"].Value.ToString();
+                                frm.B_Remisionado = Convert.ToBoolean(RowGrid.Cells["B_Remisionado"].Value.ToString());
+                                frm.B_SurtidoCompleto = Convert.ToBoolean(RowGrid.Cells["B_SurtidoCompleto"].Value.ToString());
+                                dtDetalle = dtPaso.Clone();
+                            }
+
+                            foreach (DataRow item in dtPaso.Rows)
+                            {
+                                string SKU;
+                                bool B_Existe;
+
+                                if (dtDetalle.Rows.Count == 0)
+                                {
+                                    DataRow dr;
+                                    dr = dtDetalle.NewRow();
+
+                                    dr["K_Articulo"] = Convert.ToInt32(item["K_Articulo"]);
+                                    dr["K_Pedido_Detalle"] = Convert.ToInt32(item["K_Pedido_Detalle"].ToString());
+                                    dr["K_Pedido"] = Convert.ToInt32(item["K_Pedido"].ToString());
+                                    dr["Cantidad"] = Convert.ToInt32(item["Cantidad"]).ToString();
+                                    dr["K_Tipo_Producto"] = Convert.ToInt32(item["K_Tipo_Producto"].ToString());
+                                    dr["D_Tipo_Producto"] = item["D_Tipo_Producto"];
+                                    dr["Precio_Unitario"] = Convert.ToDecimal(item["Precio_Unitario"]);
+                                    dr["K_Sustancia_Activa"] = Convert.ToInt32(item["K_Sustancia_Activa"]);
+                                    dr["D_Sustancia_Activa"] = item["D_Sustancia_Activa"];
+                                    dr["Subtotal"] = Convert.ToDecimal(item["Subtotal"]);
+                                    dr["Tasa_IVA"] = Convert.ToDecimal(item["Tasa_IVA"]);
+                                    dr["Total_IVA"] = Convert.ToDecimal(item["Total_IVA"]);
+                                    dr["Total_Detalle"] = Convert.ToDecimal(item["Total_Detalle"]);
+                                    dr["Porcentaje_Descuento"] = Convert.ToDecimal(item["Porcentaje_Descuento"]);
+                                    dr["Descuento"] = Convert.ToDecimal(item["Descuento"]);
+                                    dr["SKU"] = item["SKU"];
+                                    dr["K_Laboratorio"] = Convert.ToInt32(item["K_laboratorio"]);
+                                    dr["D_Laboratorio"] = item["D_Laboratorio"];
+                                    dr["B_Remisionado"] = Convert.ToBoolean(item["B_Remisionado"]);
+                                    dr["D_Articulo"] = item["D_Articulo"];
+                                    dr["D_Unidad_Medida"] = item["D_Unidad_Medida"];
+                                    dr["K_Unidad_Medida"] = Convert.ToInt32(item["K_Unidad_Medida"]);
+                                    dr["B_Facturado"] = Convert.ToBoolean(item["B_Facturado"]);
+                                    dtDetalle.Rows.Add(dr);
+
+                                }
+                                else
+                                {
+                                    B_Existe = false;
+                                    //se encuentra  sumo 
+                                    foreach (DataRow row in dtDetalle.Rows)
+                                    {
+                                        SKU = row["SKU"].ToString();
+                                        B_Existe = false;
+
+                                        if (item["SKU"].ToString() == SKU)
+                                        {
+                                            row["Cantidad"] = Convert.ToInt32(item["Cantidad"]) + Convert.ToInt32(row["Cantidad"]);
+                                            row["Subtotal"] = Convert.ToDecimal(item["Subtotal"]) + Convert.ToDecimal(row["Subtotal"]);
+                                            row["Total_IVA"] = Convert.ToDecimal(item["Total_IVA"]) + Convert.ToDecimal(row["Total_IVA"]);
+                                            row["Total_Detalle"] = Convert.ToDecimal(item["Total_Detalle"]) + Convert.ToDecimal(row["Total_Detalle"]);
+                                            row["Descuento"] = Convert.ToDecimal(item["Descuento"]) + Convert.ToDecimal(row["Descuento"]);
+                                            B_Existe = true;
+                                            break;
+
+                                        }
+                                    }
+                                    if (B_Existe == false)
+                                    {
+                                        DataRow dr;
+                                        dr = dtDetalle.NewRow();
+                                        dr["K_Articulo"] = Convert.ToInt32(item["K_Articulo"]);
+                                        dr["K_Pedido_Detalle"] = Convert.ToInt32(item["K_Pedido_Detalle"].ToString());
+                                        dr["K_Pedido"] = Convert.ToInt32(item["K_Pedido"].ToString());
+                                        dr["Cantidad"] = Convert.ToInt32(item["Cantidad"]).ToString();
+                                        dr["K_Tipo_Producto"] = Convert.ToInt32(item["K_Tipo_Producto"].ToString());
+                                        dr["D_Tipo_Producto"] = item["D_Tipo_Producto"];
+                                        dr["Precio_Unitario"] = Convert.ToDecimal(item["Precio_Unitario"]);
+                                        dr["K_Sustancia_Activa"] = Convert.ToInt32(item["K_Sustancia_Activa"]);
+                                        dr["D_Sustancia_Activa"] = item["D_Sustancia_Activa"];
+                                        dr["Subtotal"] = Convert.ToDecimal(item["Subtotal"]);
+                                        dr["Tasa_IVA"] = Convert.ToDecimal(item["Tasa_IVA"]);
+                                        dr["Total_IVA"] = Convert.ToDecimal(item["Total_IVA"]);
+                                        dr["Total_Detalle"] = Convert.ToDecimal(item["Total_Detalle"]);
+                                        dr["Porcentaje_Descuento"] = Convert.ToDecimal(item["Porcentaje_Descuento"]);
+                                        dr["Descuento"] = Convert.ToDecimal(item["Descuento"]);
+                                        dr["SKU"] = item["SKU"];
+                                        dr["K_Laboratorio"] = Convert.ToInt32(item["K_laboratorio"]);
+                                        dr["D_Laboratorio"] = item["D_Laboratorio"];
+                                        dr["B_Remisionado"] = Convert.ToBoolean(item["B_Remisionado"]);
+                                        dr["D_Articulo"] = item["D_Articulo"];
+                                        dr["D_Unidad_Medida"] = item["D_Unidad_Medida"];
+                                        dr["K_Unidad_Medida"] = Convert.ToInt32(item["K_Unidad_Medida"]);
+                                        dr["B_Facturado"] = Convert.ToBoolean(item["B_Facturado"]);
+                                        dtDetalle.Rows.Add(dr);
+                                    }
+                                }
+                            }
+                            frm.LstFolios.Add(Convert.ToInt32(RowGrid.Cells["K_Pedido"].Value.ToString()));
+                            B_Entrar = false;
+                        }
+                    }
+                  
+                }
+
+                if (Contador >= 1)
+                {
+                    if (dtDetalle != null)
+                    {
+                        if (dtDetalle.Rows.Count > 0)
+                        {
+                            frm.dtArticulos = dtDetalle;
+                            frm.ShowDialog();
+
+                        }
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("DEBE SELECCIONAR POR LO MENOS UN PEDIDO PARA FACTURAR!...", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            if (rbRemisiones.Checked)
+            {
+                PEDIDOS.FRM_REGISTRA_FACTURAS_PEDIDOS frm = new PEDIDOS.FRM_REGISTRA_FACTURAS_PEDIDOS();
+                foreach (DataGridViewRow RowGrid in grdDatos.Rows)
+                {
+                    grdDatos.EndEdit();
+                    DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)RowGrid.Cells["Seleccionar"];
+                    if (chk != null)
+                    {
+                        if ((bool)((chk.Value.ToString() == "") ? false : chk.Value) == true)
+                        {
+                            DataTable dtPaso = sql_ventas.Sk_pedidos_detalle(Convert.ToInt32(RowGrid.Cells["K_Pedido"].Value.ToString()));
+                            if (dtPaso == null)
+                            {
+                                MessageBox.Show(String.Format("EL PEDIDO [{0}] NO CUENTA CON DETALLE DE ARTICULOS!...", RowGrid.Cells["K_Pedido"].Value.ToString(), "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning));
+                                return;
+                            }
+                            if (B_Entrar == true)
+                            {
+                                frm.K_OficinaInt = Convert.ToInt32(RowGrid.Cells["K_Oficina"].Value.ToString());
+                                frm.D_OficinaString = RowGrid.Cells["D_Oficina"].Value.ToString();
+                                frm.K_AlmacenInt = Convert.ToInt32(RowGrid.Cells["K_Almacen"].Value.ToString());
+                                frm.K_MedicoInt = Convert.ToInt32(RowGrid.Cells["K_Medico"].Value.ToString());
+                                frm.D_MedicoString = RowGrid.Cells["D_Medico"].Value.ToString();
+                                frm.K_PacienteInt = Convert.ToInt32(RowGrid.Cells["K_Paciente"].Value.ToString());
+                                frm.D_PacienteString = RowGrid.Cells["D_Paciente"].Value.ToString();
+                                frm.K_Paciente_DireccionInt = Convert.ToInt32(RowGrid.Cells["K_Paciente_Direccion"].Value.ToString());
+                                frm.K_ClienteInt = Convert.ToInt32(RowGrid.Cells["K_Cliente"].Value.ToString());
+                                frm.K_AsesorInt = RowGrid.Cells["K_Asesor"].Value.ToString() != DBNull.Value.ToString() ? Convert.ToInt32(RowGrid.Cells["K_Asesor"].Value.ToString()) : 0;
+                                frm.D_ClienteString = RowGrid.Cells["D_Cliente"].Value.ToString();
+                                frm.K_Cliente_Domicilio_FiscalInt = Convert.ToInt32(RowGrid.Cells["K_Cliente_Domicilio_Fiscal"].Value.ToString());
+                                frm.D_Cliente_Domicilio_FiscalString = RowGrid.Cells["Direccion_Fiscal"].Value.ToString();
+                                frm.F_Vencimiento = Convert.ToDateTime(RowGrid.Cells["F_Vencimiento"].Value.ToString());
+                                frm.ObservacionesString = RowGrid.Cells["Nota"].Value.ToString();
+                                frm.K_PedidoInt = Convert.ToInt32(RowGrid.Cells["K_Pedido"].Value.ToString());
+                                frm.FolioString = RowGrid.Cells["K_Pedido"].Value.ToString();
+                                frm.SiniestroString = RowGrid.Cells["Siniestro_Pedido"].Value.ToString() != DBNull.Value.ToString() ? RowGrid.Cells["Siniestro_Pedido"].Value.ToString() : DBNull.Value.ToString();
+                                frm.ReclamacionString = RowGrid.Cells["Reclamacion_Pedido"].Value.ToString() != "" ? RowGrid.Cells["Reclamacion_Pedido"].Value.ToString() : DBNull.Value.ToString();
+                                frm.CoaseguroString = RowGrid.Cells["Coaseguro_Pedido"].Value.ToString() != "" ? RowGrid.Cells["Coaseguro_Pedido"].Value.ToString() : DBNull.Value.ToString();
+                                frm.PorcentajeDescuentoDecimal = Convert.ToDecimal(RowGrid.Cells["Porcentaje_Descuento"].Value.ToString());
+                                frm.CoaseguroDecimal = RowGrid.Cells["Coaseguro_Pedido"].Value.ToString() != "" ? Convert.ToDecimal(RowGrid.Cells["Coaseguro_Pedido"].Value.ToString()) : 0;
+                                frm.PorcentajeCoaseguroDecimal = RowGrid.Cells["PorcentajeCoaseguro"].Value.ToString() != "" ? Convert.ToDecimal(RowGrid.Cells["PorcentajeCoaseguro"].Value.ToString()) : 0;
+                                frm.SubtotalDecimal = Convert.ToDecimal(RowGrid.Cells["SubTotal"].Value.ToString());
+                                frm.Total_IVADecimal = Convert.ToDecimal(RowGrid.Cells["Total_Iva"].Value.ToString());
+                                frm.DescuentolDecimal = Convert.ToDecimal(RowGrid.Cells["Descuento"].Value.ToString());
+                                frm.Total_PedidoDecimal = Convert.ToDecimal(RowGrid.Cells["Total_Pedido"].Value.ToString());
+                                frm.CartaString = RowGrid.Cells["Carta"].Value.ToString();
+                                frm.PolizaString = RowGrid.Cells["Poliza"].Value.ToString();
+                                frm.CelulaString = RowGrid.Cells["K_Celula"].Value.ToString();
+                                frm.B_Remisionado = Convert.ToBoolean(RowGrid.Cells["B_Remisionado"].Value.ToString());
+                                frm.B_SurtidoCompleto = Convert.ToBoolean(RowGrid.Cells["B_Surtido_Completo"].Value.ToString());
+                                dtDetalle = dtPaso.Clone();
+                            }
+
+                            foreach (DataRow item in dtPaso.Rows)
+                            {
+                                string SKU;
+                                bool B_Existe;
+
+                                if (dtDetalle.Rows.Count == 0)
+                                {
+                                    DataRow dr;
+                                    dr = dtDetalle.NewRow();
+
+                                    dr["K_Articulo"] = Convert.ToInt32(item["K_Articulo"]);
+                                    dr["K_Pedido_Detalle"] = Convert.ToInt32(item["K_Pedido_Detalle"].ToString());
+                                    dr["K_Pedido"] = Convert.ToInt32(item["K_Pedido"].ToString());
+                                    dr["Cantidad"] = Convert.ToInt32(item["Cantidad"]).ToString();
+                                    dr["K_Tipo_Producto"] = Convert.ToInt32(item["K_Tipo_Producto"].ToString());
+                                    dr["D_Tipo_Producto"] = item["D_Tipo_Producto"];
+                                    dr["Precio_Unitario"] = Convert.ToDecimal(item["Precio_Unitario"]);
+                                    dr["K_Sustancia_Activa"] = Convert.ToInt32(item["K_Sustancia_Activa"]);
+                                    dr["D_Sustancia_Activa"] = item["D_Sustancia_Activa"];
+                                    dr["Subtotal"] = Convert.ToDecimal(item["Subtotal"]);
+                                    dr["Tasa_IVA"] = Convert.ToDecimal(item["Tasa_IVA"]);
+                                    dr["Total_IVA"] = Convert.ToDecimal(item["Total_IVA"]);
+                                    dr["Total_Detalle"] = Convert.ToDecimal(item["Total_Detalle"]);
+                                    dr["Porcentaje_Descuento"] = Convert.ToDecimal(item["Porcentaje_Descuento"]);
+                                    dr["Descuento"] = Convert.ToDecimal(item["Descuento"]);
+                                    dr["SKU"] = item["SKU"];
+                                    dr["K_Laboratorio"] = Convert.ToInt32(item["K_laboratorio"]);
+                                    dr["D_Laboratorio"] = item["D_Laboratorio"];
+                                    dr["B_Remisionado"] = Convert.ToBoolean(item["B_Remisionado"]);
+                                    dr["D_Articulo"] = item["D_Articulo"];
+                                    dr["D_Unidad_Medida"] = item["D_Unidad_Medida"];
+                                    dr["K_Unidad_Medida"] = Convert.ToInt32(item["K_Unidad_Medida"]);
+                                    dr["B_Facturado"] = Convert.ToBoolean(item["B_Facturado"]);
+                                    dtDetalle.Rows.Add(dr);
+
+                                }
+                                else
+                                {
+                                    B_Existe = false;
+                                    //se encuentra  sumo 
+                                    foreach (DataRow row in dtDetalle.Rows)
+                                    {
+                                        SKU = row["SKU"].ToString();
+                                        B_Existe = false;
+
+                                        if (item["SKU"].ToString() == SKU)
+                                        {
+
+                                            row["Cantidad"] = Convert.ToInt32(item["Cantidad"]) + Convert.ToInt32(row["Cantidad"]);
+                                            row["Subtotal"] = Convert.ToDecimal(item["Subtotal"]) + Convert.ToDecimal(row["Subtotal"]);
+                                            row["Total_IVA"] = Convert.ToDecimal(item["Total_IVA"]) + Convert.ToDecimal(row["Total_IVA"]);
+                                            row["Total_Detalle"] = Convert.ToDecimal(item["Total_Detalle"]) + Convert.ToDecimal(row["Total_Detalle"]);
+                                            row["Descuento"] = Convert.ToDecimal(item["Descuento"]) + Convert.ToDecimal(row["Descuento"]);
+                                            B_Existe = true;
+                                            break;
+
+                                        }
+                                    }
+                                    if (B_Existe == false)
+                                    {
+                                        DataRow dr;
+                                        dr = dtDetalle.NewRow();
+
+                                        dr["K_Articulo"] = Convert.ToInt32(item["K_Articulo"]);
+                                        dr["K_Pedido_Detalle"] = Convert.ToInt32(item["K_Pedido_Detalle"].ToString());
+                                        dr["K_Pedido"] = Convert.ToInt32(item["K_Pedido"].ToString());
+                                        dr["Cantidad"] = Convert.ToInt32(item["Cantidad"]).ToString();
+                                        dr["K_Tipo_Producto"] = Convert.ToInt32(item["K_Tipo_Producto"].ToString());
+                                        dr["D_Tipo_Producto"] = item["D_Tipo_Producto"];
+                                        dr["Precio_Unitario"] = Convert.ToDecimal(item["Precio_Unitario"]);
+                                        dr["K_Sustancia_Activa"] = Convert.ToInt32(item["K_Sustancia_Activa"]);
+                                        dr["D_Sustancia_Activa"] = item["D_Sustancia_Activa"];
+                                        dr["Subtotal"] = Convert.ToDecimal(item["Subtotal"]);
+                                        dr["Tasa_IVA"] = Convert.ToDecimal(item["Tasa_IVA"]);
+                                        dr["Total_IVA"] = Convert.ToDecimal(item["Total_IVA"]);
+                                        dr["Total_Detalle"] = Convert.ToDecimal(item["Total_Detalle"]);
+                                        dr["Porcentaje_Descuento"] = Convert.ToDecimal(item["Porcentaje_Descuento"]);
+                                        dr["Descuento"] = Convert.ToDecimal(item["Descuento"]);
+                                        dr["SKU"] = item["SKU"];
+                                        dr["K_Laboratorio"] = Convert.ToInt32(item["K_laboratorio"]);
+                                        dr["D_Laboratorio"] = item["D_Laboratorio"];
+                                        dr["B_Remisionado"] = Convert.ToBoolean(item["B_Remisionado"]);
+                                        dr["D_Articulo"] = item["D_Articulo"];
+                                        dr["D_Unidad_Medida"] = item["D_Unidad_Medida"];
+                                        dr["K_Unidad_Medida"] = Convert.ToInt32(item["K_Unidad_Medida"]);
+                                        dr["B_Facturado"] = Convert.ToBoolean(item["B_Facturado"]);
+                                        dtDetalle.Rows.Add(dr);
+                                    }
+                                }
+                            }
+
+                            frm.LstFolios.Add(Convert.ToInt32(RowGrid.Cells["K_Pedido"].Value.ToString()));
+
+                            B_Entrar = false;
+
+                            //this.dtDetalle.Merge(dtPaso);                                                         
+                        }
+                    }
+                   
+                }
+                frm.dtArticulos = dtDetalle;
+
+                frm.ShowDialog();
+            }
+            if (rbCoaseguro.Checked)
+            {
+                int contador = 0;
+                foreach (DataGridViewRow RowGrid in grdDatos.Rows)
+                {
+                    grdDatos.EndEdit();
+                    DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)RowGrid.Cells["Seleccionar"];
+
+                    if (chk != null)
+                    {
+                        if ((bool)((chk.Value.ToString() == "") ? false : chk.Value) == true)
+                        {
+                            contador += 1;
+                        }
+                    }
+                       
+                }
+                if (contador > 1)
+                {
+                    MessageBox.Show("SOLO PUEDE FACTURAR UN COASEGURO POR OPERACION!..", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    contador = 0;
+                    return;
+                }
+                contador = 0;
+
+
+                PEDIDOS.FRM_REGISTRA_FACTURA_COASEGURO frm = new PEDIDOS.FRM_REGISTRA_FACTURA_COASEGURO();
+                DataTable dtPaso = sql_pedidos.Sk_Trae_Coaseguro(Convert.ToInt32(grdDatos.CurrentRow.Cells["K_Pedido"].Value.ToString()));
+                if ((dtPaso == null) || (dtPaso.Rows.Count == 0))
+                {
+                    MessageBox.Show("EL PEDIDO [" + grdDatos.CurrentRow.Cells["K_Pedido"].Value.ToString() + "] NO TIENE COASEGURO!..", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else
+                {
+                    frm.dtDatos = dtPaso;
+                }
+
+                frm.ShowDialog();
+            }
+            BaseBotonBuscarClick();
+        }
+
+        public override void BaseBotonProceso2Click()
+        {
+            rbPedidos.Checked = true;
+            txtDocumento.Text = string.Empty;
+            txtClavePaciente.Text = string.Empty;
+            txtClaveCliente.Text = string.Empty;
+            txtCliente.Text = string.Empty;
+            txtPaciente.Text = string.Empty;
+            txtFiltro.Text = string.Empty ;
+            BaseBotonProceso1.Visible = false;
+            BaseBotonProceso1.Enabled = false;
+            BaseBotonProceso2.Visible = false;
+            BaseBotonProceso2.Enabled = false;
+            limpia();
+        }
+ 
+        private void btnBuscaPaciente_Click(object sender, EventArgs e)
+        {
+            FILTROS.Frm_Filtro_Paciente_Pedido frm = new FILTROS.Frm_Filtro_Paciente_Pedido();
+            frm.ShowDialog();
+            if(frm.LLave_Seleccionado == 0)
+            {
+                txtClavePaciente.Text = string.Empty;
+                txtPaciente.Text = string.Empty;
+            }
+            else if (frm.LLave_Seleccionado != 0 && frm.Descripcion_Seleccionado != "")
+            {
+                txtClavePaciente.Text = frm.LLave_Seleccionado.ToString();
+                txtPaciente.Text = frm.Descripcion_Seleccionado.ToString();
+            }
+
+        }
+
+        private void btnBuscaCliente_Click(object sender, EventArgs e)
+        {
+            FILTROS.Frm_Filtra_Cliente filtra = new FILTROS.Frm_Filtra_Cliente(GlobalVar.K_Empresa);
+            filtra.ShowDialog();
+            if(filtra.K_Cliente_Seleccionado == 0)
+            {
+               txtClaveCliente.Text = string.Empty;
+               txtCliente.Text = string.Empty;
+            }
+            else if (filtra.K_Cliente_Seleccionado  != 0 && filtra.D_Cliente_Seleccionado != "")
+            {
+                txtClaveCliente.Text = Convert.ToString(filtra.K_Cliente_Seleccionado);
+                txtCliente.Text = filtra.D_Cliente_Seleccionado;
+            }
+      
+        }
+
+        private void txtDocumento_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if((EsNumero(e.KeyChar)) ||(e.KeyChar == Convert.ToChar(Keys.Back)))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            try
+            { dtDatos.DefaultView.RowFilter = $" D_Paciente LIKE '%{txtFiltro.Text}%' or  D_Cliente LIKE '%{txtFiltro.Text}%'"; }
+            catch (Exception ex){}
+        }
+
+        private void rbtnCoaseguro_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbtnPrivada_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbtnPrivada.Checked)
+            {
+                FRM_REGISTRO_FACTURAS frms = new FRM_REGISTRO_FACTURAS();
+                frms.ShowDialog();
+            }
+        }
+
+        private void limpia()
+        {
+            if (grdDatos.RowCount > 0)
+            {
+                DataTable dt = (DataTable)grdDatos.DataSource;
+                dt.Clear();
+                BaseBotonExcel.Visible = false;
+                BaseBotonExcel.Enabled = false;
+                BaseBotonProceso1.Visible = false;
+                BaseBotonProceso1.Enabled = false;
+                BaseBotonProceso2.Visible = false;
+                BaseBotonProceso2.Enabled = false;
+            }
+
+        }
+
+        private void txtDocumento_TextChanged(object sender, EventArgs e)
+        {
+            if(txtDocumento.Text.Trim().Length>0)
+            {
+                try
+                {
+                    Int32 valor = Convert.ToInt32(txtDocumento.Text.Trim());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("VALOR DEMASIADO GRANDE!...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtDocumento.Text = string.Empty;
+                    txtDocumento.Focus();
+                }
+            }
+        }
+
+        public void cargaAlmacenes()
+        {
+            dtAlmacen = null;
+            cbxAlmacen.DataSource = null;
+            cbxAlmacen.Items.Clear();
+            cbxAlmacen.AutoCompleteSource = AutoCompleteSource.None;
+            cbxAlmacen.AutoCompleteMode = AutoCompleteMode.None;
+
+            dtAlmacen = sqlCatalogos.Sk_Almacenes(GlobalVar.K_Oficina);
+
+
+            if (dtAlmacen != null)
+            {
+                DataRow dr = dtAlmacen.NewRow();
+
+                dr["K_Almacen"] = 0;
+                dr["K_Oficina"] = 0;
+                dr["D_Oficina"] = "";
+                dr["D_Almacen"] = "TODOS";
+                dr["B_AceptaDevolucionesCliente"] = false;
+
+                dtAlmacen.Rows.InsertAt(dr, 0);
+                dtAlmacen.AcceptChanges();
+
+                int indice = -1;
+                indice = 0;
+                LlenaCombo(dtAlmacen, ref cbxAlmacen, "K_Almacen", "D_Almacen", indice);
+            }
+        }
+    }
+
+}

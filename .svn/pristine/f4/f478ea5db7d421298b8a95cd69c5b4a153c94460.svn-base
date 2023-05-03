@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <appSettings>
+    <add key="ConexionActiva" value="PRODUCCION" />
+    <!--Valores:  PRUEBAS Y PRODUCCION -->
+    <!-- SERVIDOR PRUEBAS-->
+    <add key="ServidorPruebas" value= "altisremoto.doesntexist.com\desarrollo" />
+    <add key="BasePruebas" value="Probemedic" />
+    <add key="UsuarioPruebas" value="sa" />
+    <add key="ContrasenaPruebas" value="VivaM3x1c0!" />
+    <!-- SERVIDOR PRODUCCION-->
+    <add key="Servidor" value="187.179.108.156" />
+    <add key="Base" value="Probemedic" />
+    <add key="Usuario" value="altis.erika" />
+    <add key="Contrasena" value="erika123" />
+    <!-- PARA ENVIO DE CORREO-->
+    <add key="Version" value="1.0.0" />
+    <add key="Fecha" value="05-Agosto-2017" />
+    <add key="ClientSettingsProvider.ServiceUri" value="" />
+  </appSettings>
+  <startup>
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.6.1" />
+  </startup>
+  <system.web>
+    <membership defaultProvider="ClientAuthenticationMembershipProvider">
+      <providers>
+        <add name="ClientAuthenticationMembershipProvider" type="System.Web.ClientServices.Providers.ClientFormsAuthenticationMembershipProvider, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" serviceUri="" />
+      </providers>
+    </membership>
+    <roleManager defaultProvider="ClientRoleProvider" enabled="true">
+      <providers>
+        <add name="ClientRoleProvider" type="System.Web.ClientServices.Providers.ClientRoleProvider, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" serviceUri="" cacheTimeout="86400" />
+      </providers>
+    </roleManager>
+  </system.web>
+</configuration>

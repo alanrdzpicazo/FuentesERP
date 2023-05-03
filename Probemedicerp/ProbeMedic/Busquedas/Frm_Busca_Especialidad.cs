@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using ProbeMedic.AppCode.BLL;
+
+namespace ProbeMedic.Busquedas
+{
+    public partial class Frm_Busca_Especialidad : Frm_Buscar
+    {
+        SQLCatalogos sql = new SQLCatalogos();
+
+        public Frm_Busca_Especialidad()
+        {
+            InitializeComponent();
+        }
+        public override void BaseMetodoInicio()
+        {
+            BaseDtDatos = sql.Sk_Especialidades();
+            if (BaseDtDatos != null)
+            {
+                CatalogoPropiedadCampoClave = "K_Especialidad";
+                CatalogoPropiedadCampoDescripcion = "D_Especialidad";
+                base.BaseMetodoInicio();
+            }
+            else
+            {
+                MessageBox.Show("NO SE ENCONTRO INFORMACION", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.Close();
+            }
+        }
+    }
+}

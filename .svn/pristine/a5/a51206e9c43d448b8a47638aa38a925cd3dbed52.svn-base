@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSInventario" targetNamespace="http://tempuri.org/DSInventario.xsd" xmlns:mstns="http://tempuri.org/DSInventario.xsd" xmlns="http://tempuri.org/DSInventario.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSInventario" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSInventario" msprop:Generator_UserDSName="DSInventario">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Stock_Labs_LG" msprop:Generator_TableClassName="Stock_Labs_LGDataTable" msprop:Generator_TableVarName="tableStock_Labs_LG" msprop:Generator_RowChangedName="Stock_Labs_LGRowChanged" msprop:Generator_TablePropName="Stock_Labs_LG" msprop:Generator_RowDeletingName="Stock_Labs_LGRowDeleting" msprop:Generator_RowChangingName="Stock_Labs_LGRowChanging" msprop:Generator_RowEvHandlerName="Stock_Labs_LGRowChangeEventHandler" msprop:Generator_RowDeletedName="Stock_Labs_LGRowDeleted" msprop:Generator_RowClassName="Stock_Labs_LGRow" msprop:Generator_UserTableName="Stock_Labs_LG" msprop:Generator_RowEvArgName="Stock_Labs_LGRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="K_Articulo" msprop:Generator_ColumnVarNameInTable="columnK_Articulo" msprop:Generator_ColumnPropNameInRow="K_Articulo" msprop:Generator_ColumnPropNameInTable="K_ArticuloColumn" msprop:Generator_UserColumnName="K_Articulo" type="xs:int" minOccurs="0" />
+              <xs:element name="D_Articulo" msprop:Generator_ColumnVarNameInTable="columnD_Articulo" msprop:Generator_ColumnPropNameInRow="D_Articulo" msprop:Generator_ColumnPropNameInTable="D_ArticuloColumn" msprop:Generator_UserColumnName="D_Articulo" type="xs:string" minOccurs="0" />
+              <xs:element name="Cantidad_Articulo" msprop:Generator_ColumnVarNameInTable="columnCantidad_Articulo" msprop:Generator_ColumnPropNameInRow="Cantidad_Articulo" msprop:Generator_ColumnPropNameInTable="Cantidad_ArticuloColumn" msprop:Generator_UserColumnName="Cantidad_Articulo" type="xs:int" minOccurs="0" />
+              <xs:element name="Inventario_Minimo" msprop:Generator_ColumnVarNameInTable="columnInventario_Minimo" msprop:Generator_ColumnPropNameInRow="Inventario_Minimo" msprop:Generator_ColumnPropNameInTable="Inventario_MinimoColumn" msprop:Generator_UserColumnName="Inventario_Minimo" type="xs:int" minOccurs="0" />
+              <xs:element name="Inventario_Maximo" msprop:Generator_ColumnVarNameInTable="columnInventario_Maximo" msprop:Generator_ColumnPropNameInRow="Inventario_Maximo" msprop:Generator_ColumnPropNameInTable="Inventario_MaximoColumn" msprop:Generator_UserColumnName="Inventario_Maximo" type="xs:int" minOccurs="0" />
+              <xs:element name="Punto_ReOrden" msprop:Generator_ColumnVarNameInTable="columnPunto_ReOrden" msprop:Generator_ColumnPropNameInRow="Punto_ReOrden" msprop:Generator_ColumnPropNameInTable="Punto_ReOrdenColumn" msprop:Generator_UserColumnName="Punto_ReOrden" type="xs:int" minOccurs="0" />
+              <xs:element name="Sobrante" msprop:Generator_ColumnVarNameInTable="columnSobrante" msprop:Generator_ColumnPropNameInRow="Sobrante" msprop:Generator_ColumnPropNameInTable="SobranteColumn" msprop:Generator_UserColumnName="Sobrante" type="xs:int" minOccurs="0" />
+              <xs:element name="UltimoCosto" msprop:Generator_ColumnVarNameInTable="columnUltimoCosto" msprop:Generator_ColumnPropNameInRow="UltimoCosto" msprop:Generator_ColumnPropNameInTable="UltimoCostoColumn" msprop:Generator_UserColumnName="UltimoCosto" type="xs:decimal" minOccurs="0" />
+              <xs:element name="K_Laboratorio" msprop:Generator_ColumnVarNameInTable="columnK_Laboratorio" msprop:Generator_ColumnPropNameInRow="K_Laboratorio" msprop:Generator_ColumnPropNameInTable="K_LaboratorioColumn" msprop:Generator_UserColumnName="K_Laboratorio" type="xs:int" minOccurs="0" />
+              <xs:element name="D_Laboratorio" msprop:Generator_ColumnVarNameInTable="columnD_Laboratorio" msprop:Generator_ColumnPropNameInRow="D_Laboratorio" msprop:Generator_ColumnPropNameInTable="D_LaboratorioColumn" msprop:Generator_UserColumnName="D_Laboratorio" type="xs:string" minOccurs="0" />
+              <xs:element name="SKU" msprop:Generator_ColumnVarNameInTable="columnSKU" msprop:Generator_ColumnPropNameInRow="SKU" msprop:Generator_ColumnPropNameInTable="SKUColumn" msprop:Generator_UserColumnName="SKU" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

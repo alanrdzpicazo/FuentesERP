@@ -1,0 +1,799 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using CrystalDecisions.CrystalReports.Engine;
+using ProbeMedic.AppCode.BLL;
+
+namespace ProbeMedic.COMPRAS
+{
+    public partial class Frm_Orden_Compra_Directa : FormaBase
+    {
+        DataTable dtDatos = new DataTable();
+        DataTable dtValida = new DataTable();
+        DataTable dtAlmacen = new DataTable();
+        DataTable dtSucursales = new DataTable();
+
+        SQLCatalogos sQLCatalogos = new SQLCatalogos();
+        SQLCompras sqlCompras = new SQLCompras();
+        SQLRecepcion sQLRecepcion = new SQLRecepcion();
+
+        int KArticulo = 0;
+        decimal PArticulo = 0;
+        decimal Porcenraje = 0;
+        int K_Almacen = 0;
+        int K_OrdenCompra = 0;
+
+        int res = 0;
+        string msg = string.Empty;
+        bool B_NoEntrar = false;
+
+        String strKeyPress = "";
+        decimal gdCant = 0;
+        decimal gdUnit = 0;
+        decimal gdImp = 0;
+        decimal gdTasaIVA = 0;
+
+        public Frm_Orden_Compra_Directa()
+        {
+            BaseGridSinFormato = true;
+            InitializeComponent();
+            AddButtonColumn();
+        }
+
+        public override void BaseMetodoInicio()
+        {
+            BaseMetodoRecarga();
+            BaseBotonReporte.Visible = false;
+            BaseBotonExcel.Visible = false;
+            BaseBotonAfectar.Visible = false;
+            BaseBotonCancelar.Text = "Limpiar";
+            BaseBotonCancelar.ToolTipText = "Limpiar Datos Capturados en Pantalla";
+            BaseBotonBorrar.Text = "Cancelar";
+            BaseBotonBorrar.ToolTipText = "Cancelar Orden...!";
+            grdDetalle.AutoGenerateColumns = false;
+
+            BaseErrorResultado = true;
+            BaseBotonModificar.Enabled = false;
+            //LblUnidadMedida.Text = "";
+
+            BaseEtiquetaEstatus.Visible = false;
+
+            dtDatos = DetalleOCDirecta_Type;
+            //dtDatos.Columns.Add("D_Articulo", typeof(string));
+
+            DataTable dtMoneda = sqlCatalogos.Sk_Tipo_Moneda();
+            if (dtMoneda != null)
+            {
+                LlenaCombo(dtMoneda, ref cmbMoneda, "K_Tipo_Moneda", "D_Tipo_Moneda", 1);
+            }
+
+            DataTable dtAlmacen = sqlCatalogos.Sk_Almacenes();
+            if (dtAlmacen != null)
+            {
+                LlenaCombo(dtAlmacen, ref cbxAlmacen, "K_Almacen", "D_Almacen", 0);
+            }
+            //LlenaCombo(sQLCatalogos.sps_TipoEmpaque(true), ref cmbTipoEmpaque, "K_TIpo_Empaque", "D_Tipo_Empaque");
+
+            txtFechaEntrega.Value=DateTime.Now.AddDays(1);
+
+            base.BaseMetodoInicio();
+        }
+
+        public override void BaseBotonNuevoClick()
+        {
+            BasePropiedadEsRegistroNuevo = true;
+            BasePropiedadId_Identity = 0;
+            BasePropiedadB_Agregando = true;
+            BasePropiedadB_Editando = false;
+
+            pnlCaptura.Enabled = true;
+            tcControl.Enabled = true;
+            cbxAlmacen.SelectedValue = 1;
+
+            btnBuscarOficina.Focus();
+            dtDatos.Rows.Clear();
+        }
+
+        public override void BaseBotonGuardarClick()
+        { 
+            if (!BaseFuncionValidaciones())
+                return;
+
+            grdDetalle.EndEdit();
+            dtDatos.AcceptChanges();
+            int K_Oficina = Convert.ToInt32(txtClaveOficina.Text);
+            int K_Proveedor = Convert.ToInt32(txtClaveProveedor.Text);
+            int K_Almacen = Convert.ToInt32(txtClaveProveedor.Text);
+            res = 0;
+            msg = string.Empty;
+
+            DateTime Fecha = DateTime.Today;
+            if (txtFechaEntrega.Value != null)
+                Fecha = txtFechaEntrega.Value;
+
+            short Tiempo = 0;
+            if (txtTiempoEntrega.Text.Trim().Length > 0)
+                Tiempo = Convert.ToInt16(txtTiempoEntrega.Text);
+
+            bool B_ImprimeOC = true;
+            string CorreosAutorizo = string.Empty;
+            decimal TipoCambio = 0;
+            int CampoIdentity = 0;
+            short TipoMoneda = Convert.ToInt16(cmbMoneda.SelectedValue);
+            if (TipoMoneda == 2) //DLLS
+                TipoCambio = Convert.ToDecimal(txtTipoCambio.Text);
+
+
+            DataTable dtDetalle = dtDatos.Copy();
+            dtDetalle.Columns.Remove("K_Detalle_Compra");
+            dtDetalle.Columns.Remove("D_Articulo");
+            dtDetalle.Columns.Remove("Porcentaje");
+
+            BaseFuncionValidaciones();
+            if (BasePropiedadEsRegistroNuevo) // Nuevo
+            {
+                res = sqlCompras.Gp_InsertaOrdenCompra_Directa(ref CampoIdentity, K_Oficina, Convert.ToInt16(cbxAlmacen.SelectedValue), Convert.ToInt16(cbxSucursales.SelectedValue), K_Proveedor, TipoMoneda, TipoCambio, Fecha, Tiempo, GlobalVar.K_Usuario, txtObservaciones.Text, dtDetalle, ref B_ImprimeOC, GlobalVar.K_Usuario, ref CorreosAutorizo, ref msg);
+            }
+
+            if (res == -1)
+            {
+                BaseErrorResultado = true;
+                MessageBox.Show(msg, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else
+            {
+                K_OrdenCompra = CampoIdentity;
+           
+                msg = "ORDEN DE COMPRA GENERADA CORRECTAMENTE CON FOLIO...: " + CampoIdentity.ToString().Trim();
+                MessageBox.Show(msg, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Cursor = Cursors.WaitCursor;
+                Reporte(K_OrdenCompra);
+                Cursor = Cursors.Default;
+                BaseErrorResultado = false;                
+                BaseMetodoInicio();
+                BaseBotonCancelarClick();
+            }
+        }
+
+        public override void BaseMetodoLimpiaControles()
+        {
+            txtOficina.Text = string.Empty;
+            txtProveedor.Text = string.Empty;
+            txtObservaciones.Text = string.Empty;
+            txtClaveOficina.Text = string.Empty;
+            txtClaveProveedor.Text = string.Empty;
+            cbxAlmacen.SelectedIndex = -1;
+            cbxSucursales.SelectedIndex = -1;
+            pnlCaptura.Enabled = false;
+            tcControl.Enabled = false;
+            txtCantidad.Text = string.Empty; ;
+            txtDetalles.Text = string.Empty;
+            cmbMoneda.SelectedIndex = 0;
+            txtTipoCambio.Text = string.Empty;
+            txtFechaEntrega.Value = DateTime.Now.AddDays(1);
+            txtTiempoEntrega.Text = "1";
+            txtArticulo.Text = string.Empty;
+        }
+
+        public override bool BaseFuncionValidaciones()
+        {
+            BaseErrorResultado = true;
+
+            if (txtClaveOficina.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("FALTA SELECCIONAR LA OFICINA QUE RECIBE...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtClaveOficina.Focus();
+                return false;
+            }
+            if (txtClaveProveedor.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("DEBE SELECCIONAR EL PROVEEDOR...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtProveedor.Focus();
+                return false;
+            }
+            if (cmbMoneda.SelectedValue == null)
+            {
+                MessageBox.Show("DEBE SELECCIONAR UN TIPO DE MONEDA...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbMoneda.Focus();
+                return false;
+            }
+            if (cbxAlmacen.SelectedValue == null)
+            {
+                MessageBox.Show("DEBE SELECCIONAR UN ALMACEN...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cbxAlmacen.Focus();
+                return false;
+            }
+            if (cbxSucursales.SelectedValue == null)
+            {
+                MessageBox.Show("DEBE SELECCIONAR UNA SUCURSAL...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cbxSucursales.Focus();
+                return false;
+            }
+            if (grdDetalle.Rows.Count == 0)
+            {
+                MessageBox.Show("DEBE SELECCIONAR AL MENOS UN ARTICULO...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            if (cmbMoneda.SelectedValue.ToString() == "1")
+            {
+                /* if ( (txtTipoCambio.Text == "") || (txtTipoCambio.Text.ToString().Length <= ) )
+                 {
+                     MessageBox.Show("PARA PODER GENERAR LA ORDEN DE COMPRA, DEBE INDICAR EL TIPO DE CAMBIO DEL DIA...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                     if (txtTipoCambio.CanFocus)
+                     { txtTipoCambio.Focus(); }
+                     return false;
+                 }*/
+            }
+
+            BaseErrorResultado = false;
+            return true;
+        }
+
+        public override void BaseBotonCancelarClick()
+        {
+            grdDetalle.DataSource = null;
+            BaseMetodoLimpiaControles();
+        }
+
+        private void btnBuscarArticulos_Click(object sender, EventArgs e)
+        {
+            if (txtClaveProveedor.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("DEBE SELECCIONAR EL PROVEEDOR...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtProveedor.Focus();
+                return;
+            }
+            FILTROS.Frm_Filtro_Articulo  frm = new FILTROS.Frm_Filtro_Articulo();
+            frm.P_K_Proveedor = Convert.ToInt32(txtClaveProveedor.Text);
+            frm.ShowDialog();
+            KArticulo = frm.LLave_Seleccionado;
+            txtArticulo.Text = frm.Descripcion_Seleccionado;
+            PArticulo = frm.Precio;
+            Porcenraje = frm.IVA;
+            LblUnidadMedida.Text = frm.Unidad_Medida;
+
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            if (txtArticulo.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("SELECCIONE UN ARTICULO", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtArticulo.Focus();
+                return;
+            }
+            if (txtCantidad.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("CAPTURE LA CANTIDAD", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtCantidad.Focus();
+                return;
+            }
+            //if (PArticulo == 0)
+            //{
+            //    MessageBox.Show("CAPTURE EL PRECIO", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    txtCantidad.Focus();
+            //    return;
+            //}
+            //int PuntoReOrden = 0;
+            //dtValida = sQLRecepcion.Gp_Valida_PuntoReOrden(0,KArticulo, Convert.ToInt32(txtCantidad.Text), PuntoReOrden);
+
+            //DataRow row = dtValida.Rows[0];
+
+            //PuntoReOrden = Convert.ToInt32(row["Punto_ReOrden"].ToString());
+
+            //if (PuntoReOrden < 0)
+            //{
+            //    MsgBox msgbox = new MsgBox();
+            //    msgbox.Show("EL ARTICULO EXCEDE EL INVENTARIO MAXIMO", "ERROR");
+            //    txtCantidad.Focus();
+            //    return;    
+        
+            //}
+
+            int Consecutivo = 1;
+
+            try
+            {
+                if (dtDatos.Rows.Count == 0)
+                {
+                    dtDatos.Columns.Add("Porcentaje", typeof(decimal));
+                    dtDatos.AcceptChanges();
+                }
+            }
+            catch (Exception ex){}
+                    
+            DataRow dr;
+            dr = dtDatos.NewRow();
+
+            if (dtDatos.Rows.Count > 0)
+            {
+                //checamos si ya se metió el mismo artículo
+
+                if (ChecaMismoArticulo(dtDatos, KArticulo))
+                {
+                    MessageBox.Show("YA EXISTE AGREGADO EL ARTÍCULO "+ txtArticulo.Text, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+
+                var maxVal = dtDatos.AsEnumerable()
+                        .Max(r => r.Field<int>("K_Detalle_Compra"));
+                Consecutivo = Convert.ToInt32(maxVal) + 1;
+            }
+
+
+            Decimal total = Convert.ToDecimal(PArticulo * Convert.ToDecimal(txtCantidad.Text)) + Convert.ToDecimal(txtCantidad.Text) * (PArticulo * Porcenraje / 100) + Convert.ToDecimal(TotalReq.Text);
+
+            dr["K_Detalle_Compra"] = Consecutivo;
+            dr["K_Articulo"] = KArticulo;
+            dr["D_Articulo"] = txtArticulo.Text;
+            dr["CantidadRequerida"] = Convert.ToDecimal(txtCantidad.Text);
+            dr["Unitario"] = PArticulo;
+            dr["Porcentaje"] = Porcenraje.ToString();
+            dr["IVA"] = Convert.ToDecimal(txtCantidad.Text) * (PArticulo * Porcenraje / 100);
+            dr["SubTotal"] = PArticulo * Convert.ToDecimal(txtCantidad.Text);
+            dr["PrecioTotal"] = PArticulo * Convert.ToDecimal(txtCantidad.Text) + Convert.ToDecimal(txtCantidad.Text) * (PArticulo * Porcenraje / 100);
+            dr["ObservacionesDetalle"] = txtDetalles.Text;
+
+            total = Math.Round(total, 2);
+
+            TotalReq.Text = total.ToString();
+            dtDatos.Rows.Add(dr);
+            B_NoEntrar = true;
+            grdDetalle.DataSource = dtDatos;
+            grdDetalle.EditMode = DataGridViewEditMode.EditOnEnter;
+            grdDetalle.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            grdDetalle.MultiSelect = false;
+
+            txtArticulo.Text = string.Empty;
+            txtDetalles.Text = string.Empty;
+            txtCantidad.Text = string.Empty;
+            KArticulo = 0;
+            LblUnidadMedida.Text = "";
+            btnBuscarArticulos.Focus();
+        }
+
+        private void btnBuscarOficina_Click_1(object sender, EventArgs e)
+        {
+            Busquedas.BuscaOficinas frm = new Busquedas.BuscaOficinas();
+            frm.BusquedaPropiedadCamposBusqueda = DevuelveCamposBusqueda(GlobalVar.dtOficinas);
+            frm.BusquedaPropiedadTablaFiltra = GlobalVar.dtOficinas;
+            frm.BusquedaPropiedadTitulo = "Busca Oficinas";
+            frm.ShowDialog();
+            if (frm.BusquedaPropiedadReglonRes != null)
+            {
+                txtClaveOficina.Text = frm.BusquedaPropiedadReglonRes["K_Oficina"].ToString();
+                txtOficina.Text = frm.BusquedaPropiedadReglonRes["D_Oficina"].ToString();
+            }
+            if (txtClaveOficina.Text != "")
+            {
+                dtAlmacen = sqlCatalogos.Sk_Almacenes(Convert.ToInt32(txtClaveOficina.Text));
+                LlenaCombo(dtAlmacen, ref cbxAlmacen, "K_Almacen", "D_Almacen");
+            }
+        }
+
+        private void btnBuscaProveedor_Click_1(object sender, EventArgs e)
+        {
+            DataTable dtProveedores = sqlCatalogos.Sk_Proveedores_Autorizados();
+            Busquedas.BuscaProveedores frm = new Busquedas.BuscaProveedores();
+            frm.BusquedaPropiedadCamposBusqueda = DevuelveCamposBusqueda(dtProveedores);
+            frm.BusquedaPropiedadTablaFiltra = dtProveedores;
+            frm.BusquedaPropiedadTitulo = "Busca Proveedores";
+            frm.ShowDialog();
+            if (frm.BusquedaPropiedadReglonRes != null)
+            {
+
+                txtClaveProveedor.Text = frm.BusquedaPropiedadReglonRes["K_Proveedor"].ToString();
+                txtProveedor.Text = frm.BusquedaPropiedadReglonRes["D_Proveedor"].ToString();
+
+                if (dtSucursales != null)
+                {
+                    dtSucursales.Rows.Clear();
+                }
+
+                dtSucursales = sqlCatalogos.Sk_Sucursales_Proveedor(Convert.ToInt32(txtClaveProveedor.Text));
+
+                if (dtSucursales != null)
+                {
+                    LlenaCombo(dtSucursales, ref cbxSucursales, "K_Sucursal_Proveedor", "D_Sucursal_Proveedor", 0);
+                }
+                cbxSucursales.SelectedIndex = -1;
+            }
+            else
+            {
+                cbxSucursales.SelectedIndex = 0;
+            }
+        }
+
+        private bool ChecaMismoArticulo(DataTable dt, int K_Articulo)
+        {
+            bool b_mismo = false;
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (Convert.ToInt32 (dr["K_Articulo"].ToString()) == K_Articulo )
+                {
+                    b_mismo = true;
+                    break;
+                }
+            }
+
+            return b_mismo;
+        }
+
+        private bool blnCeldaImportes()
+        {
+            if (grdDetalle.CurrentCell == null)
+                return false;
+            if (B_NoEntrar == false)
+                return false;
+
+            return (grdDetalle.CurrentCell.ColumnIndex == 5);
+        }
+
+        private void CambiaCantidades(Int32 IndiceColumna, DataGridViewRow ren, Int32 IndiceRegistro)
+        {
+            if (!EsNumero(Convert.ToDecimal(ren.Cells["Unitario1"].Value)))
+            {
+                MessageBox.Show("LA COLUMNA PRECIO UNITARIO SOLO ACEPTA NUMEROS", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                grdDetalle.Rows[IndiceRegistro].Cells[IndiceColumna].Value = "0";
+                return;
+            }
+
+            decimal Unitario = 0;
+            decimal Cantidad = 0;
+            decimal Importe = 0;
+            decimal SubTotal = 0;
+            decimal TotalIVA = 0;
+            decimal Porcentaje = 0;
+
+            
+                if (ren.Cells["Unitario1"].Value != null)
+                    Unitario = Math.Round(Convert.ToDecimal(ren.Cells["Unitario1"].Value), 2);
+                if (ren.Cells["CantidadRequerida1"].Value != null)
+                    Cantidad = Convert.ToDecimal(ren.Cells["CantidadRequerida1"].Value);
+                if (ren.Cells["Porcentaje_IVA"].Value != null)
+                    Porcentaje = Convert.ToDecimal(ren.Cells["Porcentaje_IVA"].Value);
+
+                ren.Cells["Unitario1"].Value = Unitario;
+
+                SubTotal = Math.Round(Cantidad * Unitario, 2);
+                TotalIVA = Math.Round(SubTotal * Porcentaje / 100, 2);
+                Importe = SubTotal + TotalIVA;
+
+                //ren.Cells["PrecioTotal"].Value = Importe;
+
+                grdDetalle.Rows[IndiceRegistro].Cells["SubTotal1"].Value = SubTotal;
+                grdDetalle.Rows[IndiceRegistro].Cells["IVA1"].Value = TotalIVA;
+                grdDetalle.Rows[IndiceRegistro].Cells["PrecioTotal1"].Value = Importe;
+            
+        }
+
+        private void AddButtonColumn()
+        {
+            DataGridViewButtonColumn buttons = new DataGridViewButtonColumn();
+            {
+                buttons.HeaderText = "Inventario";
+                buttons.Text = "-";
+                buttons.UseColumnTextForButtonValue = true;
+                buttons.AutoSizeMode =
+                    DataGridViewAutoSizeColumnMode.AllCells;
+                buttons.FlatStyle = FlatStyle.Standard;
+                buttons.CellTemplate.Style.BackColor = Color.Honeydew;
+                buttons.DisplayIndex = 14;
+            }
+
+            grdDetalle.Columns.Add(buttons);
+
+        }
+
+        private void grdDetalle_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                DataGridViewRow row = grdDetalle.CurrentRow;
+
+                if (row != null)
+                {
+                    int K_Detalle_Compra = Convert.ToInt32(row.Cells[1].Value);
+                    Decimal pretotal = Convert.ToDecimal(row.Cells[8].Value);
+                    DataRow ren = dtDatos.AsEnumerable().Where(p => p.Field<int>("K_Detalle_Compra") == K_Detalle_Compra).FirstOrDefault();
+                    if (ren != null)
+                        dtDatos.Rows.Remove(ren);
+                    Decimal total = Convert.ToDecimal(TotalReq.Text) - pretotal;
+                    TotalReq.Text = total.ToString();
+                }
+            }
+        }
+
+        private void txtCantidad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+           if((EsNumero(e.KeyChar)) || (e.KeyChar == (char) Keys.Back))
+           {
+                e.Handled = false;
+           }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void grdDetalle_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (blnCeldaImportes())
+            {
+                if (grdDetalle[e.ColumnIndex, e.RowIndex].Value != null)
+                {
+                    if (Keys.Back.ToString() == strKeyPress)
+                    {
+                        SendKeys.Send("{RIGHT}");
+                    }
+                }
+            }
+        }
+
+        private void grdDetalle_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            // string algo = "dsasdf";
+        }
+
+        private void grdDetalle_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            if (blnCeldaImportes())
+            {
+                if (((DataGridView)sender).CurrentCell.GetEditedFormattedValue(e.RowIndex, DataGridViewDataErrorContexts.Display).ToString() == "")
+                {
+                    MessageBox.Show("DEBE ESPECIFICAR UN VALOR PARA PRECIO UNITARIO...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        private void grdDetalle_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewRow ren = grdDetalle.CurrentRow;
+            if (ren != null)
+            {
+                if (blnCeldaImportes())
+                {
+                    CambiaCantidades(e.ColumnIndex, ren, e.RowIndex);
+                }
+            }
+        }
+
+        private void grdDetalle_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (blnCeldaImportes())
+            {
+
+                if (!grdDetalle.CurrentCell.IsInEditMode)
+                {
+                    //grdDetalle.CurrentCell.ed = true;
+                    grdDetalle.BeginEdit(true);
+                    return;
+                }
+                if (char.IsNumber(e.KeyChar) || e.KeyChar == '.' || e.KeyChar == (char)Keys.Back)
+                {
+                    TextBox textBox = (TextBox)sender;
+                    if (Convert.ToDecimal((Boolean)(textBox.Text.Length == 0) ? "0" : textBox.Text.Replace("$", "0")) == 0)
+                    {
+                        e.Handled = false;
+                        return;
+                    }
+                    string[] parts = textBox.Text.Split('.'); // result.Split('.');
+
+                    if (parts.Length > 1)
+                    {
+                        if ((parts[1].Length > 1 && parts.Length > 2) && e.KeyChar != (char)Keys.Back)
+                        {
+                            e.Handled = true;
+                        }
+                        if (e.KeyChar == '.')
+                        {
+                            e.Handled = true;
+                        }
+                    }
+                    else
+                    {
+                        e.Handled = false;
+                    }
+
+
+                }
+                else
+                    e.Handled = true;
+            }
+        }
+
+        private void grdDetalle_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {         
+            e.Control.KeyPress += new KeyPressEventHandler(grdDetalle_KeyPress);
+            e.Control.TextChanged += new EventHandler(grdDetalle_TextChanged);
+            DataGridViewComboBoxEditingControl dgvCombo = e.Control as DataGridViewComboBoxEditingControl;
+
+            //if (dgvCombo != null)
+            //{
+            //    // se remueve el handler previo que pudiera tener asociado, a causa ediciones previas de la celda
+            //    // evitando asi que se ejecuten varias veces el evento
+            //    //
+            //    //dgvCombo.SelectedIndexChanged -= new  EventHandler(dvgCombo_SelectedIndexChanged);               
+
+            //    dgvCombo.SelectedIndexChanged += new EventHandler(dvgCombo_SelectedIndexChanged);
+
+            //}
+        }
+        private void grdDetalle_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox textBox = (TextBox)sender;
+                if (textBox.Text.Trim().Length > 0)
+                {
+                    if (Convert.ToDecimal(textBox.Text.Trim().Replace("$", "")) >= Int32.MaxValue)
+                    {
+                        MessageBox.Show("VALOR DEMASIADO GRANDE!... \r\n" +
+                               "EL VALOR MÁXIMO PERMITDO ES DE. " + Int32.MaxValue.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        textBox.Text = string.Empty;
+                    }
+                }
+            }
+            catch
+            {
+                return;
+            }
+        }
+        private void grdDetalle_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (grdDetalle.CurrentRow != null)
+            {
+                if (grdDetalle.Columns[e.ColumnIndex].Index == 11)
+                {
+                    COMPRAS.FRM_Inventario_Articulo frm = new COMPRAS.FRM_Inventario_Articulo();
+                    frm.K_Articulo_ = Convert.ToInt32(grdDetalle.CurrentRow.Cells["K_Articulo1"].Value);
+                    frm.ShowDialog();
+                }
+            }
+        }
+
+        private void grdDetalle_KeyDown(object sender, KeyEventArgs e)
+        {
+            strKeyPress = e.KeyCode.ToString();
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                SendKeys.Send("{TAB}");
+            }
+
+        }
+
+        private void Reporte(Int32 K_Orden_Compra)
+        {
+            DataTable dtResultado = new DataTable();
+            dtResultado = sqlCompras.Gp_Sk_ReporteOC(K_Orden_Compra);
+            BaseErrorResultado = false;
+            if (dtResultado != null)
+            {
+                ReportDocument rpt = new ProbeMedic.REPORTES.RPT_Orden_Compra();
+                ReporteTitulo = "Orden de Compra";
+                ReporteModulo = "Orden de Compra";
+                ConectaReporte(ref rpt, dtResultado, ReporteTitulo, ReporteModulo, "", true);
+                ReporteRPT = rpt;
+
+                Frm_Reportes frmReporte = new Frm_Reportes();
+                frmReporte.P_Titulo = ReporteTitulo;
+                frmReporte.P_ReporteRPT = ReporteRPT;
+                frmReporte.P_TablaCorreo = ReportedtCorreo;
+                frmReporte.ShowDialog();
+            }
+        }
+
+        private void txtCantidad_TextChanged(object sender, EventArgs e)
+        {
+            if (txtCantidad.Text.Trim().Length > 0)
+                if (Convert.ToDecimal(txtCantidad.Text.Trim()) > 1000)
+                {
+                    MessageBox.Show("VALOR DEMASIADO GRANDE!...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtCantidad.Text = string.Empty;
+                }
+        }
+
+        private void txtFechaEntrega_ValueChanged(object sender, EventArgs e)
+        {
+            if (txtFechaEntrega.Value < DateTime.Now)
+            {
+                MessageBox.Show("LA FECHA DE ENTREGA NO PUEDE SER MENOR A LA ACTUAL!...", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtFechaEntrega.Value = DateTime.Now.AddDays(1);
+                return;
+            }
+
+        }
+
+        private void txtFechaEntrega_Leave(object sender, EventArgs e)
+        {
+            DateTime F_Actual = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            DateTime F_Entrega = new DateTime(txtFechaEntrega.Value.Year, txtFechaEntrega.Value.Month, txtFechaEntrega.Value.Day);
+
+            // Difference in days, hours, and minutes.
+            TimeSpan ts = F_Entrega - F_Actual;
+
+            // Difference in days.
+            int differenceInDays = ts.Days;
+
+            txtTiempoEntrega.Text = differenceInDays.ToString();
+        }
+
+        private void txtTiempoEntrega_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((EsNumero(e.KeyChar)) || (e.KeyChar == Convert.ToChar(Keys.Back)))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtTiempoEntrega_TextChanged(object sender, EventArgs e)
+        {
+            if (txtTiempoEntrega.Text.Trim().Length == 0)
+            {
+                txtTiempoEntrega.Text = "1";
+            }
+            if ((Convert.ToDecimal(txtTiempoEntrega.Text.Trim()) <= 0) || (txtTiempoEntrega.Text.Trim().Length == 0))
+            {
+                MessageBox.Show("EL TIEMPO DE ENTREGA DEBE SER MAYOR A CERO!...", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTiempoEntrega.Text = "1";
+                return;
+            }
+            if (Convert.ToInt32(txtTiempoEntrega.Text.Trim()) > 365)
+            {
+                MessageBox.Show("VALOR DEMASIADO GRANDE!... \r\n" +
+                    "EL VALOR MÁXIMO PERMITIDO ES 365 DIAS", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtTiempoEntrega.Text = "1";
+            }
+
+        }
+
+        private void txtTiempoEntrega_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == 13)
+            {
+                if (txtTiempoEntrega.Text != "")
+                {
+                    DateTime Dt = new DateTime();
+                    Dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                    Dt = Dt.AddDays(txtTiempoEntrega.Text.Length == 0 ? 0 : Convert.ToDouble(txtTiempoEntrega.Text));
+
+                    txtFechaEntrega.Value = Dt;
+
+                }
+            }
+        }
+
+        private void txtCantidad_Leave(object sender, EventArgs e)
+        {
+            if(txtCantidad.Text.Trim().Length>0)
+            {
+                if(Convert.ToDecimal(txtCantidad.Text.Trim())==0)
+                {
+                    MessageBox.Show("VALOR NO VÁLIDO!...", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtCantidad.Text = string.Empty;
+                    txtCantidad.Focus();
+                }
+            }
+        }
+
+        private void Frm_Orden_Compra_Directa_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+
+        }
+    }
+}

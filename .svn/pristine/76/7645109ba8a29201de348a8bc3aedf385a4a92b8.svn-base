@@ -1,0 +1,130 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using ProbeMedic.AppCode.BLL;
+
+namespace ProbeMedic.FILTROS
+{
+    public partial class Frm_Filtro_Articulo : Frm_Filtro
+    {
+        SQLCatalogos sql_Catalogos = new SQLCatalogos();
+        DataTable AR_DISPONIBLES = new DataTable();
+        DataTable AR_DISPONIBLESS = new DataTable();
+
+        public int LLave_Seleccionado { get; set; }
+        public string Descripcion_Seleccionado { get; set; }
+        public decimal Precio { get; set; }
+        public decimal IVA { get; set; }
+        public string  Unidad_Medida { get; set; }
+        public string Sku { get; set; }
+        public int P_K_Proveedor { get; set; }
+
+        public Frm_Filtro_Articulo()
+        {
+            InitializeComponent();
+        }
+
+        private void Frm_Filtro_Articulo_Load(object sender, EventArgs e)
+        {
+            AR_DISPONIBLES.Columns.Add("K_Articulo", typeof(Int32));
+            AR_DISPONIBLES.Columns.Add("D_Articulo", typeof(string));
+            AR_DISPONIBLES.Columns.Add("SKU", typeof(string));
+            AR_DISPONIBLES.Columns.Add("D_Familia", typeof(string));
+            AR_DISPONIBLES.Columns.Add("D_Laboratorio", typeof(string));
+            AR_DISPONIBLES.Columns.Add("D_Sustancia_Activa", typeof(string));
+            AR_DISPONIBLES.Columns.Add("Porcentaje", typeof(decimal));
+            AR_DISPONIBLES.Columns.Add("D_Unidad_Medida", typeof(string));
+            AR_DISPONIBLES.Columns.Add("Precio_Unitario", typeof(decimal));
+        }
+
+        private void dgvDisponibles_DoubleClick(object sender, EventArgs e)
+        {
+            DataGridViewRow row = dgvDisponibles.CurrentRow;
+            if (row == null)
+                return;
+            LLave_Seleccionado = (Convert.ToInt32(row.Cells["K_Articulo"].Value));
+            Descripcion_Seleccionado = (row.Cells["D_Articulo"].Value.ToString());
+            Precio = (Convert.ToDecimal(row.Cells["Precio_Unitario"].Value));
+            IVA = (Convert.ToDecimal(row.Cells["Porcentaje"].Value));
+            Precio = (Convert.ToDecimal(row.Cells["Precio_Unitario"].Value));
+            Unidad_Medida = (row.Cells["D_Unidad_Medida"].Value.ToString());
+            Sku = (row.Cells["SKU"].Value.ToString());
+            this.Close();
+        }
+
+        private void BtnBuscar_Click(object sender, EventArgs e)
+        {
+            if (dgvDisponibles.RowCount > 0)
+            {
+                DataTable dt = (DataTable)dgvDisponibles.DataSource;
+                dt.Clear();
+            }
+            if (txtSKU.Text.Trim() == "")
+            {
+                txtSKU.Text = null;
+            }
+            if (txt_D_Articulo.Text.Trim() == "")
+            {
+                txt_D_Articulo.Text = null;
+            }
+
+            if ((ucFamiliaArticulo1.K_Familia_Articulo > 0) || (ucLaboratorio1.K_Laboratorio > 0) || (ucSustanciaActiva1.K_Sustancia_Activa > 0) || txtSKU.Text != null || txt_D_Articulo.Text != null)
+            {
+
+                if (P_K_Proveedor != 0)
+                {
+
+                    AR_DISPONIBLESS = sql_Catalogos.Sk_Articulos_Consulta_CPrecio(ucFamiliaArticulo1.K_Familia_Articulo, ucLaboratorio1.K_Laboratorio, ucSustanciaActiva1.K_Sustancia_Activa, txtSKU.Text, txt_D_Articulo.Text, P_K_Proveedor);
+                }
+                else
+                {
+                    AR_DISPONIBLESS = sql_Catalogos.Sk_Articulos_Consulta_CPrecio(ucFamiliaArticulo1.K_Familia_Articulo, ucLaboratorio1.K_Laboratorio, ucSustanciaActiva1.K_Sustancia_Activa, txtSKU.Text, txt_D_Articulo.Text);
+                }
+                if (AR_DISPONIBLESS != null)
+                {
+                    foreach (DataRow irew in AR_DISPONIBLESS.Rows)
+                    {
+                        DataRow dtdRow3 = AR_DISPONIBLES.NewRow();
+                        dtdRow3["K_Articulo"] = Convert.ToInt32(irew["K_Articulo"]);
+                        dtdRow3["D_Articulo"] = irew["D_Articulo"].ToString();
+                        dtdRow3["SKU"] = irew["SKU"].ToString();
+                        dtdRow3["D_Familia"] = irew["D_Familia"].ToString();
+                        dtdRow3["D_Laboratorio"] = irew["D_Laboratorio"].ToString();
+                        dtdRow3["D_Sustancia_Activa"] = irew["D_Sustancia_Activa"].ToString();
+                        dtdRow3["Porcentaje"] = Convert.ToDecimal(irew["Porcentaje"]);
+                        dtdRow3["D_Unidad_Medida"] = irew["D_Unidad_Medida"].ToString();
+                        dtdRow3["Precio_Unitario"] = Convert.ToDecimal(irew["Precio_Unitario"]);
+
+                        AR_DISPONIBLES.Rows.Add(dtdRow3);
+                    }
+                    dgvDisponibles.DataSource = AR_DISPONIBLES;
+                }
+                else
+                {
+                    MessageBox.Show("NO EXISTEN ARTICULOS CON LOS PARAMETROS INDICADOS ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+
+            }
+            else
+            {
+                MessageBox.Show("DEBE INDICAR AL MENOS UN FILTRO ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void Frm_Filtro_Articulo_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F11)
+            {
+                BtnBuscar.PerformClick();
+
+            }
+        }
+    }
+}

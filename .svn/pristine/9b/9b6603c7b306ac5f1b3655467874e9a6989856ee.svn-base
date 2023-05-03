@@ -1,0 +1,183 @@
+﻿namespace ProbeMedic.VENTAS
+{
+    partial class Frm_Pedidos_Ptes
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.dgv_datos = new System.Windows.Forms.DataGridView();
+            this.Pedido = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.F_Pedido = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cK_Almacen = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Almacen = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Oficina = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Estatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D_Cliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.BaseDtDatos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BasedtDatosConFiltro)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BaseDtPermisos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_datos)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // dgv_datos
+            // 
+            this.dgv_datos.AllowUserToAddRows = false;
+            this.dgv_datos.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_datos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgv_datos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_datos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Pedido,
+            this.F_Pedido,
+            this.cK_Almacen,
+            this.Almacen,
+            this.Oficina,
+            this.Estatus,
+            this.D_Cliente,
+            this.Nombre});
+            this.dgv_datos.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_datos.Location = new System.Drawing.Point(0, 38);
+            this.dgv_datos.MultiSelect = false;
+            this.dgv_datos.Name = "dgv_datos";
+            this.dgv_datos.ReadOnly = true;
+            this.dgv_datos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_datos.Size = new System.Drawing.Size(1155, 339);
+            this.dgv_datos.TabIndex = 3;
+            this.dgv_datos.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_datos_CellMouseDoubleClick);
+            this.dgv_datos.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_datos_KeyDown);
+            // 
+            // Pedido
+            // 
+            this.Pedido.DataPropertyName = "Pedido";
+            this.Pedido.FillWeight = 248.731F;
+            this.Pedido.HeaderText = "Pedido";
+            this.Pedido.Name = "Pedido";
+            this.Pedido.ReadOnly = true;
+            this.Pedido.Width = 50;
+            // 
+            // F_Pedido
+            // 
+            this.F_Pedido.DataPropertyName = "F_Pedido";
+            this.F_Pedido.FillWeight = 75.21151F;
+            this.F_Pedido.HeaderText = "Fecha";
+            this.F_Pedido.Name = "F_Pedido";
+            this.F_Pedido.ReadOnly = true;
+            this.F_Pedido.Width = 150;
+            // 
+            // cK_Almacen
+            // 
+            this.cK_Almacen.DataPropertyName = "K_Almacen";
+            this.cK_Almacen.HeaderText = "cK_Almacen";
+            this.cK_Almacen.Name = "cK_Almacen";
+            this.cK_Almacen.ReadOnly = true;
+            this.cK_Almacen.Visible = false;
+            // 
+            // Almacen
+            // 
+            this.Almacen.DataPropertyName = "Almacen";
+            this.Almacen.FillWeight = 75.21151F;
+            this.Almacen.HeaderText = "Almacén";
+            this.Almacen.Name = "Almacen";
+            this.Almacen.ReadOnly = true;
+            this.Almacen.Width = 130;
+            // 
+            // Oficina
+            // 
+            this.Oficina.DataPropertyName = "Oficina";
+            this.Oficina.FillWeight = 75.21151F;
+            this.Oficina.HeaderText = "Oficina";
+            this.Oficina.Name = "Oficina";
+            this.Oficina.ReadOnly = true;
+            this.Oficina.Width = 130;
+            // 
+            // Estatus
+            // 
+            this.Estatus.DataPropertyName = "Estatus";
+            this.Estatus.FillWeight = 75.21151F;
+            this.Estatus.HeaderText = "Estatus";
+            this.Estatus.Name = "Estatus";
+            this.Estatus.ReadOnly = true;
+            this.Estatus.Width = 160;
+            // 
+            // D_Cliente
+            // 
+            this.D_Cliente.DataPropertyName = "D_Cliente";
+            this.D_Cliente.FillWeight = 75.21151F;
+            this.D_Cliente.HeaderText = "Cliente";
+            this.D_Cliente.Name = "D_Cliente";
+            this.D_Cliente.ReadOnly = true;
+            this.D_Cliente.Width = 240;
+            // 
+            // Nombre
+            // 
+            this.Nombre.DataPropertyName = "Nombre";
+            this.Nombre.FillWeight = 75.21151F;
+            this.Nombre.HeaderText = "Nombre";
+            this.Nombre.Name = "Nombre";
+            this.Nombre.ReadOnly = true;
+            this.Nombre.Width = 240;
+            // 
+            // Frm_Pedidos_Ptes
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1155, 416);
+            this.Controls.Add(this.dgv_datos);
+            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.Name = "Frm_Pedidos_Ptes";
+            this.Text = "Pedidos Pendientes por Surtir";
+            this.Load += new System.EventHandler(this.Frm_Pedidos_Ptes_Load);
+            this.Controls.SetChildIndex(this.dgv_datos, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.BaseDtDatos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BasedtDatosConFiltro)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BaseDtPermisos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_datos)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.DataGridView dgv_datos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Pedido;
+        private System.Windows.Forms.DataGridViewTextBoxColumn F_Pedido;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cK_Almacen;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Almacen;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Oficina;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Estatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D_Cliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
+    }
+}

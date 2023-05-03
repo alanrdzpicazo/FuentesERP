@@ -1,0 +1,722 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using ProbeMedic.AppCode.BLL;
+
+
+namespace ProbeMedic.PEDIDOS
+{
+    public partial class FRM_REGISTRA_FACTURAS_PEDIDOS : FormaBase
+    {
+        int res;
+        string msg = string.Empty;
+        Funciones fx = new Funciones();
+        Procesos Procesos = new Procesos();
+        DataTable dt_pedidos = new DataTable();
+        DataTable dt_serie = new DataTable();
+        SQLPedidos sql_pedidos = new SQLPedidos();
+        SQLVentas sql_ventas = new SQLVentas();
+        SQLCatalogos sql_catalogos = new SQLCatalogos();
+
+        DataTable dtAlmacen = new DataTable();
+
+        public int K_FacturaInt { get; set; }
+
+        bool B_Error_Entrar = false;
+        bool B_NoEntrar = false;
+
+        #region PROPIEDADES GET AND SET
+        public int K_Tipo_Venta { get; set; }
+        public DataTable dtEncabezado { get; set; }
+        public DataTable dtArticulos { get; set; }
+        public int K_OficinaInt { get; set; }
+        public string D_OficinaString { get; set; }
+        public int K_AlmacenInt { get; set; }
+        public int K_MedicoInt { get; set; }
+        public string D_MedicoString { get; set; }
+        public int K_PacienteInt { get; set; }
+        public string D_PacienteString { get; set; }
+        public int K_Paciente_DireccionInt { get; set; }
+        public string D_Paciente_DireccionString { get; set; }
+        public int K_ClienteInt { get; set; }
+        public string D_ClienteString { get; set; }
+        public int K_Cliente_Domicilio_FiscalInt { get; set; }
+        public string D_Cliente_Domicilio_FiscalString { get; set; }
+        public int K_Uso_CFDIInt { get; set; }
+        public string D_Uso_CFDIString { get; set; }
+        public string D_SerieString { get; set; }
+        public int K_Forma_PagoInt { get; set; }
+        public string D_Forma_PagoString { get; set; }
+        public int K_Canal_DistribucionInt { get; set; }
+        public string D_Canal_DistrbucionString { get; set; }
+        public DateTime F_EntregaDate { get; set; }
+        public string ObservacionesString { get; set; }
+        public int K_PedidoInt { get; set; }
+        public string FolioString { get; set; }
+        public string SiniestroString { get; set; }
+        public string ReclamacionString { get; set; }
+        public string CoaseguroString { get; set; }
+        public decimal PorcentajeDescuentoDecimal { get; set; }
+        public decimal CoaseguroDecimal { get; set; }
+        public decimal PorcentajeCoaseguroDecimal { get; set; }
+        public decimal SubtotalDecimal { get; set; }
+        public decimal Total_IVADecimal { get; set; }
+        public decimal DescuentolDecimal { get; set; }
+        public decimal Total_PedidoDecimal { get; set; }
+        public Int32 K_AsesorInt { get; set; }
+        public string NombreString { get; set; }
+        public DateTime F_Vencimiento { get; set; }
+        public string CartaString { get; set; }
+        public string PolizaString { get; set; }
+        public string CelulaString { get; set; }
+        public int K_CelulaInt { get; set; }
+        public bool B_Remisionado { get; set; }
+        public bool B_SurtidoCompleto { get; set; }
+        public List<int> LstFolios = new List<int>();
+
+        public bool B_Precio_Unitario{ get; set; }
+        #endregion
+
+        public FRM_REGISTRA_FACTURAS_PEDIDOS()
+        {
+            InitializeComponent();
+    
+        }
+
+        private void FRM_REGISTRA_FACTURAS_PEDIDOS_Load(object sender, EventArgs e)
+        {
+            if (!ValidaTengaSeries())
+            {
+                MessageBox.Show("EL USUARIO NO TIENE SERIES ASIGNADAS. NO PODRA FACTURAR!...", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                B_Error_Entrar = true;
+            }
+
+        }
+
+        private void FRM_REGISTRA_FACTURAS_PEDIDOS_Shown(object sender, EventArgs e)
+        {
+            if (!B_Error_Entrar)
+            {
+ 
+                CargaAlmacen();
+                CargaPedido();
+
+                if (dtArticulos != null)
+                {
+                    B_NoEntrar =true;
+                    if (grdDetalle.ReadOnly)
+                        grdDetalle.ReadOnly = false;
+                    grdDetalle.DataSource = dtArticulos;
+                    grdDetalle.EditMode = DataGridViewEditMode.EditOnEnter;
+                    grdDetalle.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                    grdDetalle.MultiSelect = false;
+
+                }
+                else
+                {
+                    B_NoEntrar = false;
+                }
+
+                dt_pedidos.Columns.Add("K_Pedido", typeof(Int32));
+
+                if(!ValidaPuedeCambiarSerie())
+                {
+                    txtSerie.Text = dt_serie.Rows[0]["D_Serie"].ToString();
+                    btnBuscarSerie.Enabled = false;
+                    txtSerie.Enabled = false;
+                }
+                else
+                {
+                    txtSerie.Text = dt_serie.Rows[0]["D_Serie"].ToString();
+                    btnBuscarSerie.Enabled = true;
+                    txtSerie.Enabled = true;
+                }
+                WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                Close();
+            }
+        }
+
+        public override void BaseMetodoInicio()
+        {
+            BaseBotonNuevo.Visible = false;
+            BaseBotonExcel.Visible = false;
+            BaseBotonExcel.Enabled = false;
+            BaseBotonNuevo.Enabled = false;
+            BaseBotonModificar.Visible = false;
+            BaseBotonModificar.Enabled = false;
+            BaseBotonBuscar.Visible = false;
+            BaseBotonBuscar.Enabled = false;
+            BaseBotonCancelar.Visible = false;
+            BaseBotonCancelar.Enabled = false;
+            BaseBotonBorrar.Visible = false;
+            BaseBotonBorrar.Enabled = false;
+            BaseBotonAfectar.Visible = false;
+            BaseBotonAfectar.Enabled = false;
+            BaseBotonReporte.Visible = false;
+            BaseBotonReporte.Enabled = false;
+            BaseBotonNuevo.Enabled = false;
+            BaseBotonNuevo.Visible = false;
+            base.BaseMetodoInicio();
+            BaseBotonGuardar.Visible = true;
+            BaseBotonGuardar.Enabled = true;
+            grdDetalle.AutoGenerateColumns = false;
+
+            ucCelulas1.txt_D_Celula.BackColor = Color.White;
+            ucCanalDistribucionCliente1.txt_E_Canal_Distribucion.BackColor = Color.White;
+
+            BaseBotonReporte.Visible = false;
+            BaseBotonReporte.Enabled = false;
+            BaseBotonReporte.Text = "Reimprimir Factura";
+            BaseBotonReporte.ToolTipText = "Reimprimir Factura";
+            BaseBotonReporte.Width = 120;
+
+        }
+
+        public override void BaseBotonGuardarClick()
+        {
+            if (!BaseFuncionValidaciones())
+                return;
+            dt_pedidos.Rows.Clear();
+            foreach (var item in LstFolios)
+            {
+                dt_pedidos.Rows.Add(item);
+            }
+
+            Int32 CampoIdentity = 0;
+            string msg = string.Empty;
+
+            DataTable dt_detalle = dtArticulos.Copy();
+            dt_detalle.Columns.Remove("K_Pedido_Detalle");
+            dt_detalle.Columns.Remove("K_Pedido");
+            dt_detalle.Columns.Remove("D_Tipo_Producto");
+            dt_detalle.Columns.Remove("K_Sustancia_Activa");
+            dt_detalle.Columns.Remove("D_Sustancia_Activa");
+            dt_detalle.Columns.Remove("K_Laboratorio");
+            dt_detalle.Columns.Remove("D_Laboratorio");
+            dt_detalle.Columns.Remove("D_Unidad_Medida");
+            dt_detalle.Columns.Remove("D_Articulo");
+            dt_detalle.Columns.Remove("B_Remisionado");
+            dt_detalle.Columns["Cantidad"].SetOrdinal(0);
+            dt_detalle.Columns["K_Tipo_Producto"].SetOrdinal(1);
+            dt_detalle.Columns["K_Unidad_Medida"].SetOrdinal(2);
+            dt_detalle.Columns["SKU"].SetOrdinal(3);
+            dt_detalle.Columns["K_Articulo"].SetOrdinal(4);
+            dt_detalle.Columns["Precio_Unitario"].SetOrdinal(5);
+            dt_detalle.Columns["Porcentaje_Descuento"].SetOrdinal(6);
+            dt_detalle.Columns["Descuento"].SetOrdinal(7);
+            dt_detalle.Columns["Subtotal"].SetOrdinal(8);
+            dt_detalle.Columns["Tasa_IVA"].SetOrdinal(9);
+            dt_detalle.Columns["Total_IVA"].SetOrdinal(10);
+            dt_detalle.Columns["Total_Detalle"].SetOrdinal(11);
+            dt_detalle.Columns["Comentarios"].SetOrdinal(12);
+            dt_detalle.Columns["B_Facturado"].SetOrdinal(13);
+  
+            try
+            {
+                res = 0;
+                res = sql_ventas.In_Registro_Factura(ref CampoIdentity, K_OficinaInt,2, dtpFechaEntrega.Value, 1, Convert.ToDecimal(1.00), ucClientes1.K_Cliente,
+                                K_Cliente_Domicilio_FiscalInt, ucCanalDistribucionCliente1.K_Canal_Distribucion,
+                                ucMedicos1.K_medico, Convert.ToDecimal(txtPorcentajeDescuento.Text.Length > 0 ? txtPorcentajeDescuento.Text : "0"),
+                                Convert.ToDecimal(txtDescuento.Text), Convert.ToDecimal(txtSubtotal.Text), Convert.ToDecimal(txtTotalIVA.Text),
+                                Convert.ToDecimal(txtTotalFactura.Text), GlobalVar.K_Usuario, Convert.ToDecimal(txtbox_coaseguro.Text),
+                                Convert.ToDecimal(txt_box_porcentaje_coaseguro.Text), txtObservaciones.Text, GlobalVar.PC_Name, check_box_remisionado.Checked,
+                                check_box_surtido_completo.Checked, Convert.ToInt32(cbxAlmacen.SelectedValue), ucPacientes1.K_Paciente, K_Paciente_DireccionInt,
+                                dt_detalle, dt_pedidos, ucCelulas1.K_Celula, txtCarta.Text, txtPoliza.Text, true,txtSerie.Text.Trim(),K_Forma_PagoInt,K_Uso_CFDIInt,txtCorreo.Text.Trim(),ref msg);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            if (res == -1)
+            {
+                BaseErrorResultado = true;
+                MessageBox.Show(msg, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                BaseBotonReporte.Visible = false;
+                BaseBotonReporte.Enabled = false;
+                BaseBotonGuardar.Visible = true;
+                BaseBotonGuardar.Enabled = true;
+                return;
+            }
+            else
+            {
+                BaseErrorResultado = false;
+                MessageBox.Show("FACTURA GENERADA CORRECTAMENTE CON NUMERO DE FOLIO: " + CampoIdentity.ToString(), "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                BaseBotonReporte.Visible = true;
+                BaseBotonReporte.Enabled = true;
+                BaseBotonGuardar.Visible = true;
+                BaseBotonGuardar.Enabled = false;
+                K_FacturaInt = CampoIdentity;
+            }
+        }
+
+        private void btnBuscarSerie_Click(object sender, EventArgs e)
+        {
+            if (dt_serie != null)
+            {
+                dt_serie.Columns["D_Serie"].SetOrdinal(1);
+                dt_serie.Columns["Orden"].SetOrdinal(0);
+                dt_serie.AcceptChanges();
+                Busquedas.BuscaSeries frm = new Busquedas.BuscaSeries();
+                frm.BusquedaPropiedadCamposBusqueda = DevuelveCamposBusqueda(dt_serie);
+                frm.BusquedaPropiedadTablaFiltra = dt_serie;
+                if (dt_serie.Rows.Count == 1)
+                {
+                    D_SerieString = dt_serie.Rows[0]["D_Serie"].ToString();
+                    txtSerie.Text = dt_serie.Rows[0]["D_Serie"].ToString();
+
+                    if (!GlobalVar.B_CambiaSerie)
+                        btnBuscarSerie.Enabled = false;
+                }
+                else if (dt_serie.Rows.Count > 1)
+                {
+                    if (!GlobalVar.B_CambiaSerie)
+                    {
+                        D_SerieString = dt_serie.Rows[0]["D_Serie"].ToString();
+                        txtSerie.Text = dt_serie.Rows[0]["D_Serie"].ToString();
+                        btnBuscarSerie.Enabled = false;
+                    }
+                    else
+                    {
+                        frm.BusquedaPropiedadTitulo = "Busca Series";
+                        frm.ShowDialog();
+                        if (frm.BusquedaPropiedadReglonRes != null)
+                        {
+                            D_SerieString = frm.BusquedaPropiedadReglonRes[1].ToString();
+                            txtSerie.Text = frm.BusquedaPropiedadReglonRes[1].ToString();
+                        }
+                        else
+                        {
+                            D_SerieString = string.Empty;
+                            txtSerie.Text = string.Empty;
+                        }
+                    }    
+                   
+                }
+            }
+            else
+            {
+                MessageBox.Show("EL USUARIO NO TIENE ASIGNADAS SERIES!...", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                btnBuscarSerie.Focus();
+            }
+        }
+
+        private void btnCFDI_Click(object sender, EventArgs e)
+        {
+            DataTable dt_cfdi = sql_catalogos.Sk_Uso_CFDI();
+
+            Busquedas.BuscaCFDI frm = new Busquedas.BuscaCFDI();
+            frm.BusquedaPropiedadCamposBusqueda = DevuelveCamposBusqueda(dt_cfdi);
+            frm.BusquedaPropiedadTablaFiltra = dt_cfdi;
+
+            if (dt_cfdi != null)
+            {
+                if (dt_cfdi.Rows.Count == 1)
+                {
+                    K_Uso_CFDIInt = Convert.ToInt32(dt_cfdi.Rows[0]["K_Uso_CFDI"].ToString());
+                    D_Uso_CFDIString = dt_cfdi.Rows[0]["D_Uso_CFDI"].ToString();
+                    txtCFDI.Text = dt_cfdi.Rows[0]["D_Uso_CFDI"].ToString();
+                }
+                else if (dt_cfdi.Rows.Count > 1)
+                {
+                    frm.BusquedaPropiedadTitulo = "Busca USO CFDI";
+                    frm.ShowDialog();
+                    if (frm.BusquedaPropiedadReglonRes != null)
+                    {
+                        K_Uso_CFDIInt = Convert.ToInt32(frm.BusquedaPropiedadReglonRes["K_Uso_CFDI"].ToString());
+                        D_Uso_CFDIString = frm.BusquedaPropiedadReglonRes["D_Uso_CFDI"].ToString();
+                        txtCFDI.Text = frm.BusquedaPropiedadReglonRes["D_Uso_CFDI"].ToString();
+                    }
+                    else
+                    {
+                        K_Uso_CFDIInt = 0;
+                        D_Uso_CFDIString = string.Empty;
+                        txtCFDI.Text = string.Empty;
+                    }
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("NO SE ENCONTRO INFORMACION!...", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                btnCFDI.Focus();
+            }
+        }
+
+        private void btnBuscaFormaPago_Click(object sender, EventArgs e)
+        {
+            DataTable dt_formapago = sql_catalogos.Sk_Forma_Pago();
+
+            Busquedas.BuscaFormaPagoFactura frm = new Busquedas.BuscaFormaPagoFactura();
+            frm.BusquedaPropiedadCamposBusqueda = DevuelveCamposBusqueda(dt_formapago);
+            frm.BusquedaPropiedadTablaFiltra = dt_formapago;
+
+            if (dt_formapago != null)
+            {
+                if (dt_formapago.Rows.Count == 1)
+                {
+                    K_Forma_PagoInt = Convert.ToInt32(dt_formapago.Rows[0]["K_Forma_Pago"].ToString());
+                    D_Forma_PagoString = dt_formapago.Rows[0]["D_Forma_Pago"].ToString();
+                    txtFormaPago.Text = dt_formapago.Rows[0]["D_Forma_Pago"].ToString();
+                }
+                else if (dt_formapago.Rows.Count > 1)
+                {
+                    frm.BusquedaPropiedadTitulo = "Busca Forma Pago";
+                    frm.ShowDialog();
+                    if (frm.BusquedaPropiedadReglonRes != null)
+                    {
+                        K_Forma_PagoInt = Convert.ToInt32(frm.BusquedaPropiedadReglonRes["K_Forma_Pago"].ToString());
+                        D_Forma_PagoString = frm.BusquedaPropiedadReglonRes["D_Forma_Pago"].ToString();
+                        txtFormaPago.Text = frm.BusquedaPropiedadReglonRes["D_Forma_Pago"].ToString();
+                    }
+                    else
+                    {
+                        K_Forma_PagoInt = 0;
+                        D_Forma_PagoString = string.Empty;
+                        txtFormaPago.Text = string.Empty;
+                    }
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("NO SE ENCONTRO INFORMACION!...", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                btnBuscaFormaPago.Focus();
+            }
+        }
+
+        private void CargaAlmacen()
+        {
+            if (K_OficinaInt == 0)
+            {
+                dtAlmacen.Rows.Clear();
+            }
+            else
+            {
+                dtAlmacen = sql_catalogos.Sk_Almacenes(K_OficinaInt);
+            }
+
+            if (dtAlmacen != null)
+            {
+                DataRow dr = dtAlmacen.NewRow();
+
+                dr["K_Almacen"] = 0;
+                dr["K_Oficina"] = 0;
+                dr["D_Oficina"] = "";
+                dr["D_Almacen"] = "[SELECCIONAR]";
+                dr["B_AceptaDevolucionesCliente"] = false;
+
+                dtAlmacen.Rows.InsertAt(dr, 0);
+                dtAlmacen.AcceptChanges();
+
+                int indice = -1;
+                indice = 0;
+                LlenaCombo(dtAlmacen, ref cbxAlmacen, "K_Almacen", "D_Almacen", indice);
+            }
+        }
+
+        private void CargaPedido()
+        {  
+            if(LstFolios.Count > 0)
+            {
+                foreach(var objeto in LstFolios)
+                {                
+                    txtFolio.Text +=  objeto.ToString()+",";
+                }
+                txtFolio.Text = txtFolio.Text.TrimEnd(',');
+            }
+
+            ucMedicos1.K_medico = K_MedicoInt;
+            ucMedicos1.txt_Medico.Text = D_MedicoString;
+            txtSiniestro.Text = SiniestroString;
+            txtReclamacion.Text = ReclamacionString;
+            ucPacientes1.K_Paciente = K_PacienteInt;
+            ucPacientes1.txt_Paciente.Text = D_PacienteString;
+            txtAsesor.Text = NombreString;
+            txtObservaciones.Text = ObservacionesString;
+            check_box_surtido_completo.Checked = B_SurtidoCompleto;
+            check_box_remisionado.Checked = B_Remisionado;
+            txtClaveOficina.Text = K_OficinaInt.ToString();
+            txtOficina.Text = D_OficinaString;
+            cbxAlmacen.SelectedValue = K_AlmacenInt;
+            ucClientes1.K_Cliente = K_ClienteInt;
+            ucClientes1.txt_Cliente.Text = D_ClienteString;
+            txtDomicilioFiscal.Text = D_Cliente_Domicilio_FiscalString;
+            //this.dtpFechaEntrega.Value = F_EntregaDate;
+            dateTimePicker1.Value = F_Vencimiento;
+            txtPorcentajeDescuento.Text = PorcentajeDescuentoDecimal.ToString();
+            txtbox_coaseguro.Text = CoaseguroDecimal.ToString();
+            txt_box_porcentaje_coaseguro.Text = PorcentajeCoaseguroDecimal.ToString();
+            txtSubtotal.Text = SubtotalDecimal.ToString();
+            txtTotalIVA.Text = Total_IVADecimal.ToString();
+            txtDescuento.Text = DescuentolDecimal.ToString();
+            txtTotalFactura.Text = Total_PedidoDecimal.ToString();
+            ucCanalDistribucionCliente1.K_Canal_Distribucion = K_Canal_DistribucionInt;
+            ucCanalDistribucionCliente1.txt_E_Canal_Distribucion.Text = D_Canal_DistrbucionString;
+            txtCarta.Text = CartaString.ToString();
+            txtPoliza.Text = Total_PedidoDecimal.ToString();
+            ucCanalDistribucionCliente1.K_Canal_Distribucion = K_Canal_DistribucionInt;
+            ucCanalDistribucionCliente1.txt_E_Canal_Distribucion.Text = D_Canal_DistrbucionString;
+            CalculaTotales();
+        }
+
+        private void CalculaTotales()
+        {
+
+            //Calculamos el IVA de todos los artículos
+            var x = dtArticulos.AsEnumerable().Select(r => Convert.ToDecimal(r.Field<Decimal>("Total_IVA"))).Sum();
+            if (x.ToString() != "")
+            {
+                if (x >= 0)
+                {
+                    txtTotalIVA.Text = Math.Round(x, 2).ToString("N2").Trim();
+                }
+            }
+
+            //Calculamos el SUBTOTAL de todos los artículos
+            var z = dtArticulos.AsEnumerable().Select(r => Convert.ToDecimal(r.Field<Decimal>("Subtotal"))).Sum();
+            if (z.ToString() != "")
+            {
+                if (z >= 0)
+                {
+                    txtSubtotal.Text = Math.Round(z, 2).ToString("N2").Trim();
+                }
+            }
+
+            //Calculamos el TOTAL del pedido
+            decimal totalPedido = x + z + Convert.ToDecimal(this.txtbox_coaseguro.Text);
+            txtTotalFactura.Text = Math.Round(totalPedido, 2).ToString("N2");
+
+        }
+
+        private bool ValidaTengaSeries()
+        {
+            dt_serie = sql_catalogos.SK_UsuaSerieAsig(GlobalVar.K_Usuario);
+
+            if(dt_serie == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private bool ValidaPuedeCambiarSerie()
+        {
+            res = 0;
+            res = sql_pedidos.Gp_ValidaPuedaCambiarSerie(GlobalVar.K_Usuario);
+
+            if(res ==-1)
+            {
+                if(msg.Length>0)
+                {
+                    BaseErrorResultado = true;
+                    MessageBox.Show(msg, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Close();
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return true;
+            }
+            return true;
+            
+        }
+
+        private void grdDetalle_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            e.Control.KeyPress += new KeyPressEventHandler(grdDetalle_KeyPress);
+            e.Control.TextChanged += new EventHandler(grdDetalle_TextChanged);
+        }
+
+        private void grdDetalle_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if(textBox.Text.Trim().Length>0)
+            {
+                decimal valor = 0;
+                if (!Decimal.TryParse(textBox.Text.Trim(), out valor))
+                {
+                    MessageBox.Show("VALOR DEMASIADO GRANDE!...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    textBox.Text = "0.00";
+                }
+            }
+       
+        }
+
+        private void grdDetalle_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (blnCeldaImportes())
+            {
+                if (!grdDetalle.CurrentCell.IsInEditMode)
+                {
+                    grdDetalle.BeginEdit(true);
+                    return;
+                }
+                if (char.IsNumber(e.KeyChar) || e.KeyChar == '.' || e.KeyChar == (char)Keys.Back)
+                {
+                    TextBox textBox = (TextBox)sender;
+                    if ((textBox.Text.Trim().Length == 0) && (e.KeyChar.ToString() == "."))
+                    {
+                        e.Handled = true;
+                    }
+
+                    if (Convert.ToDecimal((Boolean)(textBox.Text.Length == 0) ? "0" : textBox.Text.Replace("$", "0")) == 0)
+                    {
+                        e.Handled = false;
+                        return;
+                    }
+                    string[] parts = textBox.Text.Split('.'); // result.Split('.');
+
+                    if (parts.Length > 1)
+                    {
+                        if ((parts[1].Length > 1 && parts.Length > 2) && e.KeyChar != (char)Keys.Back)
+                        {
+                            e.Handled = true;
+                        }
+                        if (e.KeyChar == '.')
+                        {
+                            e.Handled = true;
+                        }
+                    }
+                    else
+                    {
+                        e.Handled = false;
+                    }
+
+
+                }
+                else
+                    e.Handled = true;
+            }
+        }
+
+        private bool blnCeldaImportes()
+        {
+            if (grdDetalle.CurrentCell == null)
+                return false;
+            if (B_NoEntrar == false)
+                return false;
+
+            return ((grdDetalle.CurrentCell.ColumnIndex == 6) || (grdDetalle.CurrentCell.ColumnIndex == 9));
+        }
+
+        private void grdDetalle_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            if (blnCeldaImportes())
+            {
+                if (((DataGridView)sender).CurrentCell.GetEditedFormattedValue(e.RowIndex, DataGridViewDataErrorContexts.Display).ToString() == "")
+                {
+                    MessageBox.Show("DEBE ESPECIFICAR UN VALOR PARA PRECIO UNITARIO...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        private void grdDetalle_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewRow ren = grdDetalle.CurrentRow;
+            if (ren != null)
+            {
+                if (blnCeldaImportes())
+                {
+                    CambiaCantidades(e.ColumnIndex, ren, e.RowIndex);
+                }
+            }
+        }
+
+        private void CambiaCantidades(Int32 IndiceColumna, DataGridViewRow ren, Int32 IndiceRegistro)
+        {
+            if (!EsNumero(Convert.ToDecimal(ren.Cells["Precio_Unitario"].Value)))
+            {
+                MessageBox.Show("LA COLUMNA PRECIO UNITARIO SOLO ACEPTA NUMEROS", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                grdDetalle.Rows[IndiceRegistro].Cells[IndiceColumna].Value = "0";
+                return;
+            }
+
+            decimal Unitario = 0;
+            decimal Cantidad = 0;
+            decimal Importe = 0;
+            decimal SubTotal = 0;
+            decimal TotalIVA = 0;
+            decimal Porcentaje = 0;
+
+            if (ren.Cells["Precio_Unitario"].Value != null)
+                Unitario = Math.Round(Convert.ToDecimal(ren.Cells["Precio_Unitario"].Value), 2);
+            if (ren.Cells["Cantidad"].Value != null)
+                Cantidad = Convert.ToDecimal(ren.Cells["Cantidad"].Value);
+            if (ren.Cells["Tasa_IVA"].Value != null)
+                Porcentaje = Convert.ToDecimal(ren.Cells["Tasa_IVA"].Value);
+
+            ren.Cells["Precio_Unitario"].Value = Unitario;
+ 
+            SubTotal = Math.Round(Cantidad * Unitario, 2);
+            TotalIVA = Math.Round(SubTotal * Porcentaje / 100, 2);
+            Importe = SubTotal + TotalIVA;
+
+            grdDetalle.Rows[IndiceRegistro].Cells["Subtotal"].Value = SubTotal;
+            grdDetalle.Rows[IndiceRegistro].Cells["Total_Detalle"].Value = Importe;
+            grdDetalle.Rows[IndiceRegistro].Cells["Total_IVA"].Value = TotalIVA;
+            CalculaTotales();
+
+
+        }
+
+        private void btn_editar_paciente_Click(object sender, EventArgs e)
+        {
+            CATALOGOS.PACIENTES.FRM_EDITAR_PACIENTE frm = new CATALOGOS.PACIENTES.FRM_EDITAR_PACIENTE();
+            frm.K_Paciente = ucPacientes1.K_Paciente;
+            frm.Nombre_Actual = ucPacientes1.txt_Paciente.Text.Trim();
+            frm.ShowDialog();
+            if(frm.Nombre_Nuevo!=null)
+            {
+                ucPacientes1.txt_Paciente.Text = frm.Nombre_Nuevo;
+            }
+            
+        }
+
+        public override void BaseBotonReporteClick()
+        {
+            Cursor = Cursors.WaitCursor;
+            Procesos.Genera_PDF(txtSerie.Text.Trim(),K_FacturaInt.ToString());
+            Cursor = Cursors.Default;
+        }
+
+        public override bool BaseFuncionValidaciones()
+        {
+            BaseErrorResultado = true;
+
+            if (txtCorreo.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("FALTA CAPTURAR CORREO...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtCorreo.Focus();
+                return false;
+            }
+            if (!fx.ValidaEmail(txtCorreo.Text))
+            {
+                MessageBox.Show("Debe capturar una dirección de correo valida...!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtCorreo.Text = string.Empty;
+                txtCorreo.Focus();
+                return false;
+            }
+
+            BaseErrorResultado = false;
+            return true;
+        }
+    }
+}
